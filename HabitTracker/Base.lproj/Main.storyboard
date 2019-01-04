@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,11 +12,83 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HabitTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WNu-2x-1Cc">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="weekCell" id="bmo-7K-vLg">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bmo-7K-vLg" id="4dL-4Q-2vg">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b8k-pE-0wP" userLabel="Button0">
+                                                    <rect key="frame" x="32" y="7" width="30" height="30"/>
+                                                    <state key="normal" title="0"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4g-xp-Fx1" userLabel="Button1">
+                                                    <rect key="frame" x="79" y="7" width="30" height="30"/>
+                                                    <state key="normal" title="1"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSj-zI-fu5" userLabel="Button2">
+                                                    <rect key="frame" x="125.5" y="7" width="30" height="30"/>
+                                                    <state key="normal" title="2"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hsc-eA-ydv" userLabel="Button3">
+                                                    <rect key="frame" x="172.5" y="7" width="30" height="30"/>
+                                                    <state key="normal" title="3"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJh-yH-Zda" userLabel="Button4">
+                                                    <rect key="frame" x="219.5" y="7" width="30" height="30"/>
+                                                    <state key="normal" title="4"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebf-VS-3wY" userLabel="Button5">
+                                                    <rect key="frame" x="266.5" y="7" width="30" height="30"/>
+                                                    <state key="normal" title="5"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FVO-KJ-7wo" userLabel="Button6">
+                                                    <rect key="frame" x="313" y="7" width="30" height="30"/>
+                                                    <state key="normal" title="6"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="rJh-yH-Zda" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="0wa-tI-MFK"/>
+                                                <constraint firstItem="ebf-VS-3wY" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="6:8" id="1iD-JQ-brd"/>
+                                                <constraint firstItem="ebf-VS-3wY" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="7jM-CU-wqw"/>
+                                                <constraint firstItem="v4g-xp-Fx1" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="AA2-Tm-GXj"/>
+                                                <constraint firstItem="FVO-KJ-7wo" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="7:8" id="O4w-gA-CQU"/>
+                                                <constraint firstItem="FVO-KJ-7wo" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="OiE-kV-Q41"/>
+                                                <constraint firstItem="tSj-zI-fu5" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="SaG-ia-nuo"/>
+                                                <constraint firstItem="rJh-yH-Zda" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="5:8" id="WML-Vs-sT2"/>
+                                                <constraint firstItem="v4g-xp-Fx1" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="2:8" id="d1V-dw-F4O"/>
+                                                <constraint firstItem="hsc-eA-ydv" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="4:8" id="e8b-D4-aNg"/>
+                                                <constraint firstItem="hsc-eA-ydv" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="jp6-i0-XEI"/>
+                                                <constraint firstItem="tSj-zI-fu5" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="3:8" id="knT-Hk-NRt"/>
+                                                <constraint firstItem="b8k-pE-0wP" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="1:8" id="yY8-wd-5Y1"/>
+                                                <constraint firstItem="b8k-pE-0wP" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="ynT-Ej-wv7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="y4J-C5-XkP"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="BhQ-Yd-98q"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WNu-2x-1Cc" secondAttribute="trailing" id="C6u-2h-ZhK"/>
+                            <constraint firstItem="WNu-2x-1Cc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="k8u-JV-rZ9"/>
+                            <constraint firstItem="WNu-2x-1Cc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="oGV-bK-dlY"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WNu-2x-1Cc" secondAttribute="bottom" id="s82-PE-o8Z"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
