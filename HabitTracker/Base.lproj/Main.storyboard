@@ -48,69 +48,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WNu-2x-1Cc">
                                 <rect key="frame" x="0.0" y="106" width="375" height="561"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="weekCell" id="bmo-7K-vLg">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bmo-7K-vLg" id="4dL-4Q-2vg">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b8k-pE-0wP" userLabel="Button0">
-                                                    <rect key="frame" x="32" y="5.5" width="30" height="33"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                                    <state key="normal" title="0"/>
-                                                </button>
-                                                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4g-xp-Fx1" userLabel="Button1">
-                                                    <rect key="frame" x="79" y="5.5" width="30" height="33"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                                    <state key="normal" title="1"/>
-                                                </button>
-                                                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSj-zI-fu5" userLabel="Button2">
-                                                    <rect key="frame" x="125.5" y="5.5" width="30" height="33"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                                    <state key="normal" title="2"/>
-                                                </button>
-                                                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hsc-eA-ydv" userLabel="Button3">
-                                                    <rect key="frame" x="172.5" y="5.5" width="30" height="33"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                                    <state key="normal" title="3"/>
-                                                </button>
-                                                <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJh-yH-Zda" userLabel="Button4">
-                                                    <rect key="frame" x="219.5" y="5.5" width="30" height="33"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                                    <state key="normal" title="4"/>
-                                                </button>
-                                                <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebf-VS-3wY" userLabel="Button5">
-                                                    <rect key="frame" x="266.5" y="5.5" width="30" height="33"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                                    <state key="normal" title="5"/>
-                                                </button>
-                                                <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FVO-KJ-7wo" userLabel="Button6">
-                                                    <rect key="frame" x="313" y="5.5" width="30" height="33"/>
-                                                    <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="18"/>
-                                                    <state key="normal" title="6"/>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="rJh-yH-Zda" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="0wa-tI-MFK"/>
-                                                <constraint firstItem="ebf-VS-3wY" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="6:8" id="1iD-JQ-brd"/>
-                                                <constraint firstItem="ebf-VS-3wY" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="7jM-CU-wqw"/>
-                                                <constraint firstItem="v4g-xp-Fx1" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="AA2-Tm-GXj"/>
-                                                <constraint firstItem="FVO-KJ-7wo" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="7:8" id="O4w-gA-CQU"/>
-                                                <constraint firstItem="FVO-KJ-7wo" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="OiE-kV-Q41"/>
-                                                <constraint firstItem="tSj-zI-fu5" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="SaG-ia-nuo"/>
-                                                <constraint firstItem="rJh-yH-Zda" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="5:8" id="WML-Vs-sT2"/>
-                                                <constraint firstItem="v4g-xp-Fx1" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="2:8" id="d1V-dw-F4O"/>
-                                                <constraint firstItem="hsc-eA-ydv" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="4:8" id="e8b-D4-aNg"/>
-                                                <constraint firstItem="hsc-eA-ydv" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="jp6-i0-XEI"/>
-                                                <constraint firstItem="tSj-zI-fu5" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="3:8" id="knT-Hk-NRt"/>
-                                                <constraint firstItem="b8k-pE-0wP" firstAttribute="centerX" secondItem="4dL-4Q-2vg" secondAttribute="trailing" multiplier="1:8" id="yY8-wd-5Y1"/>
-                                                <constraint firstItem="b8k-pE-0wP" firstAttribute="centerY" secondItem="4dL-4Q-2vg" secondAttribute="centerY" id="ynT-Ej-wv7"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="y4J-C5-XkP"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="BhQ-Yd-98q"/>

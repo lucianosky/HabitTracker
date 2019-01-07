@@ -19,6 +19,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         calMonth = CalMonth()
         refreshData()
+        tableView.rowHeight = 50
+        tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     @IBAction func prevMonthTouched(_ sender: Any) {
@@ -40,6 +42,10 @@ class ViewController: UIViewController {
         yearLabel.text = calMonth?.year()
     }
     
+    @objc func buttonClicked(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+    }
+    
 }
 
 
@@ -54,7 +60,7 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "weekCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeekTableViewCell
         if indexPath.section == 0 {
             let headers = CalMonth.getWeekHeaders()
             for tag in 0...6 {
@@ -62,6 +68,7 @@ extension ViewController: UITableViewDataSource {
                     button.setTitle("\(headers[tag])", for: .normal)
                     button.setTitleColor(UIColor.gray, for: .normal)
                     button.isEnabled = false
+                    button.isSelected = false
                 }
             }
         } else {
@@ -69,9 +76,13 @@ extension ViewController: UITableViewDataSource {
                 for tag in 0...6 {
                     if let button = cell.viewWithTag(tag+1) as? UIButton {
                         let color = days[tag].fromMonth ? UIColor.black : UIColor.gray
+                        button.isSelected = false
                         button.setTitle("\(days[tag].day)", for: .normal)
                         button.setTitleColor(color, for: .normal)
                         button.isEnabled = days[tag].fromMonth
+                        if days[tag].fromMonth {
+                            button.addTarget(self, action: #selector(ViewController.buttonClicked(_:)), for: .touchUpInside)
+                        }
                     }
                 }
             }
