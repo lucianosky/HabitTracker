@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MonthViewController: UIViewController {
     
     var calMonth: CalMonth?
     @IBOutlet weak var monthLabel: UILabel!
@@ -49,7 +49,7 @@ class ViewController: UIViewController {
 }
 
 
-extension ViewController: UITableViewDataSource {
+extension MonthViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -81,7 +81,7 @@ extension ViewController: UITableViewDataSource {
                         button.setTitleColor(color, for: .normal)
                         button.isEnabled = days[tag].fromMonth
                         if days[tag].fromMonth {
-                            button.addTarget(self, action: #selector(ViewController.buttonClicked(_:)), for: .touchUpInside)
+                            button.addTarget(self, action: #selector(MonthViewController.buttonClicked(_:)), for: .touchUpInside)
                         }
                     }
                 }

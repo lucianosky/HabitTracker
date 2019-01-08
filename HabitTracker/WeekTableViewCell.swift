@@ -120,7 +120,9 @@ extension String {
 enum SFont: String {
     
     case helveticaLight18 = "hl18"
-    
+    case helveticaBold24 = "hb24"
+    case helveticaBold20 = "hb20"
+
     var font: UIFont {
         
         let sizeNum = Double(rawValue.numbers) ?? 18
