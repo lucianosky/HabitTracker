@@ -23,8 +23,11 @@ class WeekTableViewCell: UITableViewCell {
         // TODO: optional
         //let font = UIFont(name: "Helvetica-Light", size: 18)!
         for i in 0...6 {
-            let button = UIButton(.helveticaLight18, .black, "\(i)", i+1)
-            stack.addArrangedSubview(button)
+            //let button = UIButton(.helveticaLight18, .black, "\(i)", i+1)
+            //stack.addArrangedSubview(button)
+            let dayView = DayView()
+            stack.addArrangedSubview(dayView)
+            
         }
         contentView.addSubview(stack)
         contentView.backgroundColor = .background
@@ -33,8 +36,8 @@ class WeekTableViewCell: UITableViewCell {
             "stack" : stack,
         ]
         
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[stack]-|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[stack]-|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[stack]|", options: [], metrics: nil, views: viewsDict))
+        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[stack]|", options: [], metrics: nil, views: viewsDict))
     }
     
 }
@@ -59,7 +62,7 @@ extension UIStackView {
     convenience init(_ axis: NSLayoutConstraint.Axis) {
         self.init()
         self.axis = axis
-        distribution  = .equalSpacing
+        distribution  = .equalCentering
         alignment = .center
         translatesAutoresizingMaskIntoConstraints = false
     }

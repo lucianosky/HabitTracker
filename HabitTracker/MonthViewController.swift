@@ -112,6 +112,7 @@ extension MonthViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeekTableViewCell
+        /*
         if indexPath.section == 0 {
             let headers = CalMonth.getWeekHeaders()
             for tag in 0...6 {
@@ -138,12 +139,17 @@ extension MonthViewController: UITableViewDataSource {
                 }
             }
         }
+        */
         return cell
     }
     
 }
 
 extension MonthViewController : UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
     
 }
 

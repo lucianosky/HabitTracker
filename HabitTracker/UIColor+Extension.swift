@@ -23,8 +23,10 @@ extension UIColor {
     }
     
     static let background = UIColor(netHex: 0xF4F6F8) // 0xF9FAFB)
+    static let doneDark = UIColor(netHex: 0x108043)
+    
+    static let yellowLighter = UIColor(netHex: 0xFCF1CD)
 
-    static let doneDark = UIColor(netHex: 0x108043) // 0xF9FAFB)
 
 }
 
