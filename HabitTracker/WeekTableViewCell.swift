@@ -27,6 +27,7 @@ class WeekTableViewCell: UITableViewCell {
             stack.addArrangedSubview(button)
         }
         contentView.addSubview(stack)
+        contentView.backgroundColor = .background
         
         let viewsDict = [
             "stack" : stack,
@@ -44,7 +45,7 @@ extension UIButton {
         self.init(type: .custom)
         titleLabel?.font = sfont.font
         setTitle(title, for: .normal)
-        setTitleColor(.black, for: .normal)
+        setTitleColor(color, for: .normal)
         setTitleColor(.red, for: .selected)
         accessibilityIdentifier = title
         translatesAutoresizingMaskIntoConstraints = false

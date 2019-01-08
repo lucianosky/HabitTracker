@@ -12,11 +12,11 @@ class MonthViewController: UIViewController {
     
     var calMonth: CalMonth?
     
-    let monthLabel = UILabel(.helveticaBold24, .black, "Month")
-    let yearLabel = UILabel(.helveticaBold20, .black, "Year")
+    let monthLabel = UILabel(.helveticaBold24, .doneDark, "Month")
+    let yearLabel = UILabel(.helveticaBold20, .doneDark, "Year")
     let tableView = UITableView()
-    let prevButton = UIButton(.helveticaBold20, .blue, "<")
-    let nextButton = UIButton(.helveticaBold20, .blue, ">")
+    let prevButton = UIButton(.helveticaBold20, .doneDark, "<")
+    let nextButton = UIButton(.helveticaBold20, .doneDark, ">")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +36,9 @@ class MonthViewController: UIViewController {
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.backgroundColor = .background
         
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         view.addSubview(tableView)
 
         view.addSubview(yearLabel)
