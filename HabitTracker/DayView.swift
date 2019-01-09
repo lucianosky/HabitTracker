@@ -9,6 +9,7 @@
 import UIKit
 
 enum DayState {
+    case inactive
     case none
     case done
     case notDone
@@ -43,6 +44,10 @@ class DayView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[self(40)]", options: [], metrics: nil, views: viewsDict))
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[self(40)]", options: [], metrics: nil, views: viewsDict))
+        
+        // TODO: Rx
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
+        self.addGestureRecognizer(tapGesture)
     }
     
     override func draw(_ rect: CGRect) {
@@ -52,7 +57,7 @@ class DayView: UIView {
     
     private func drawCircle() {
         switch dayState {
-        case .none:
+        case .inactive, .none:
             UIColor.background.setStroke()
             UIColor.background.setFill()
         case .done:
@@ -73,6 +78,7 @@ class DayView: UIView {
     private func drawText() {
         let color: UIColor
         switch dayState {
+        case .inactive: color = .inactiveText
         case .none: color = .darkText
         case .done: color = .greenText
         case .notDone: color = .yellowText
@@ -91,6 +97,15 @@ class DayView: UIView {
         let y = (bounds.size.height - 2 - aSize.height) / 2 + 1
         let rect2 = CGRect(x: x, y: y, width: aSize.width, height: aSize.height)
         aStr.draw(in: rect2)
+    }
+    
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        switch dayState {
+        case .inactive: break
+        case .none: dayState = .done
+        case .done: dayState = .notDone
+        case .notDone: dayState = .none
+        }
     }
 
 }

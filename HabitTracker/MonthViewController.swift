@@ -15,9 +15,6 @@ class MonthViewController: UIViewController {
     let monthLabel = UILabel(.helveticaBold24, .darkText, "Month")
     let yearLabel = UILabel(.helveticaBold20, .darkText, "Year")
     let tableView = UITableView()
-    let prevButton = UIButton(.helveticaBold20, .darkText, "<")
-    let nextButton = UIButton(.helveticaBold20, .darkText, ">")
-
     override func viewDidLoad() {
         super.viewDidLoad()
         createSubviews()
@@ -44,10 +41,15 @@ class MonthViewController: UIViewController {
         view.addSubview(yearLabel)
         view.addSubview(monthLabel)
         
-        prevButton.addTarget(self, action: #selector(MonthViewController.prevMonthTouched(_:)), for: .touchUpInside)
-        view.addSubview(prevButton)
-        nextButton.addTarget(self, action: #selector(MonthViewController.nextMonthTouched(_:)), for: .touchUpInside)
-        view.addSubview(nextButton)
+        // TODO: Rx
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swiped(gesture:)))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swiped(gesture:)))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+
 
     }
     
@@ -56,38 +58,37 @@ class MonthViewController: UIViewController {
             "tableView": tableView,
             "monthLabel": monthLabel,
             "yearLabel": yearLabel,
-            "prevButton": prevButton,
-            "nextButton": nextButton,
             "topGuide": self.topLayoutGuide,
             // TODO: warning above
             // http://germanylandofinnovation.com/questions/29066/swift-safe-area-layout-guide-und-visual-format-language
         ]
         
-        // TODO - equal alingments V: monthLabel, nextButton, prevButton
-        // TODO - equal aligments H: monthLabel, , yearLabel
-        
+        // TODO - equal aligments H: monthLabel, yearLabel
+
+        //        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-40-[prevButton]", options: [], metrics: nil, views: viewsDict))
+        //        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-40-[nextButton]", options: [], metrics: nil, views: viewsDict))
+        //        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-40-[monthLabel]->=20-[prevButton]-8-[nextButton]-40-|", options: [], metrics: nil, views: viewsDict))
+
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-40-[monthLabel]-5-[yearLabel]-20-[tableView]-|", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-40-[prevButton]", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-40-[nextButton]", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[tableView]-|", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-40-[monthLabel]->=20-[prevButton]-8-[nextButton]-40-|", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-40-[yearLabel]-|", options: [], metrics: nil, views: viewsDict))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[monthLabel]", options: [], metrics: nil, views: viewsDict))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[yearLabel]-|", options: [], metrics: nil, views: viewsDict))
     }
 
-    @objc func prevMonthTouched(_ sender: Any) {
-        // TODO optional
-        calMonth = CalMonth(date: calMonth!.prevMonth())
+    @objc func swiped(gesture: UISwipeGestureRecognizer) {
+        let date: Date
+        if gesture.direction == .left || gesture.direction == .up {
+            // TODO optional
+            date = calMonth!.prevMonth()
+        } else {
+            // TODO optional
+            date = calMonth!.nextMonth()
+        }
+        calMonth = CalMonth(date: date)
         tableView.reloadData()
         refreshData()
     }
-    
-    @objc func nextMonthTouched(_ sender: Any) {
-        // TODO optional
-        calMonth = CalMonth(date: calMonth!.nextMonth())
-        tableView.reloadData()
-        refreshData()
-    }
-    
+
     func refreshData() {
         monthLabel.text = calMonth?.monthName()
         yearLabel.text = calMonth?.year()
@@ -117,34 +118,16 @@ extension MonthViewController: UITableViewDataSource {
             for tag in 0...6 {
                 if let dayView = cell.viewWithTag(tag+1) as? DayView {
                     dayView.text = headers[tag]
-                    dayView.dayState = .none
+                    dayView.dayState = .inactive
                 }
-//                if let button = cell.viewWithTag(tag+1) as? UIButton {
-//                    button.setTitle("\(headers[tag])", for: .normal)
-//                    button.setTitleColor(UIColor.gray, for: .normal)
-//                    button.isEnabled = false
-//                    button.isSelected = false
-//                }
             }
         } else {
             if let days = calMonth?.getWeekDays(indexPath.row) {
                 for tag in 0...6 {
                     if let dayView = cell.viewWithTag(tag+1) as? DayView {
                         dayView.text = "\(days[tag].day)"
-                        dayView.dayState = days[tag].fromMonth ? (tag % 2 == 0 ? .done : .notDone) : .none
+                        dayView.dayState = days[tag].fromMonth ? .none : .inactive
                     }
-                    /*
-                    if let button = cell.viewWithTag(tag+1) as? UIButton {
-                        let color = days[tag].fromMonth ? UIColor.black : UIColor.gray
-                        button.isSelected = false
-                        button.setTitle("\(days[tag].day)", for: .normal)
-                        button.setTitleColor(color, for: .normal)
-                        button.isEnabled = days[tag].fromMonth
-                        if days[tag].fromMonth {
-                            button.addTarget(self, action: #selector(MonthViewController.buttonClicked(_:)), for: .touchUpInside)
-                        }
-                    }
-                    */
                 }
             }
         }
