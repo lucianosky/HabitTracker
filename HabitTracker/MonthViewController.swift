@@ -19,13 +19,14 @@ class MonthViewController: UIViewController {
         super.viewDidLoad()
         createSubviews()
         createConstraints()
-//        createBinds()
-//        readViewModel()
+        createBinds()
+        // TODO:
+        // readViewModel()
         calMonth = CalMonth()
         refreshData()
     }
     
-    func createSubviews() {
+    private func createSubviews() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
@@ -40,32 +41,9 @@ class MonthViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(yearLabel)
         view.addSubview(monthLabel)
-        
-        // TODO: Rx
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedMonth(gesture:)))
-        swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedMonth(gesture:)))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
-
-        let tapMonth = UITapGestureRecognizer(target: self, action: #selector(MonthViewController.tappedMonth(sender:)))
-        monthLabel.isUserInteractionEnabled = true
-        monthLabel.addGestureRecognizer(tapMonth)
-        yearLabel.addGestureRecognizer(tapMonth)
-
-        let swipeYearLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedYear(gesture:)))
-        swipeYearLeft.direction = .left
-        yearLabel.isUserInteractionEnabled = true
-        yearLabel.addGestureRecognizer(swipeYearLeft)
-        
-        let swipeYearRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedYear(gesture:)))
-        swipeYearRight.direction = .right
-        yearLabel.addGestureRecognizer(swipeYearRight)
-        
     }
-    func createConstraints() {
+    
+    private func createConstraints() {
         let viewsDict: [String: Any] = [
             "tableView": tableView,
             "monthLabel": monthLabel,
@@ -87,19 +65,48 @@ class MonthViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[yearLabel]-|", options: [], metrics: nil, views: viewsDict))
     }
 
-    @objc func swipedMonth(gesture: UISwipeGestureRecognizer) {
-        // TODO optional
-        let date = gesture.direction == .left ? calMonth!.prevMonth() : calMonth!.nextMonth()
-        browseMonth(date: date)
-    }
+    // TODO: Rx
+    private func createBinds() {
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedMonth(gesture:)))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedMonth(gesture:)))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let tapMonth = UITapGestureRecognizer(target: self, action: #selector(MonthViewController.tappedToday(sender:)))
+        monthLabel.isUserInteractionEnabled = true
+        monthLabel.addGestureRecognizer(tapMonth)
 
-    @objc func swipedYear(gesture: UISwipeGestureRecognizer) {
-        // TODO optional
-        let date = gesture.direction == .left ? calMonth!.prevYear() : calMonth!.nextYear()
-        browseMonth(date: date)
+        let tapYear = UITapGestureRecognizer(target: self, action: #selector(MonthViewController.tappedToday(sender:)))
+        yearLabel.isUserInteractionEnabled = true
+        yearLabel.addGestureRecognizer(tapYear)
+        
+        let swipeYearLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedYear(gesture:)))
+        swipeYearLeft.direction = .left
+        yearLabel.addGestureRecognizer(swipeYearLeft)
+        
+        let swipeYearRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedYear(gesture:)))
+        swipeYearRight.direction = .right
+        yearLabel.addGestureRecognizer(swipeYearRight)
     }
     
-    @objc func tappedMonth(sender: UITapGestureRecognizer) {
+    @objc private func swipedMonth(gesture: UISwipeGestureRecognizer) {
+        let value = gesture.direction == .left ? -1 : 1
+        // TODO optional
+        browseMonth(date: calMonth!.addComponent(component: .month, value: value))
+    }
+
+    @objc private func swipedYear(gesture: UISwipeGestureRecognizer) {
+        let value = gesture.direction == .left ? -1 : 1
+        // TODO optional
+//        let date = gesture.direction == .left ? calMonth!.prevYear() : calMonth!.nextYear()
+//        browseMonth(date: date)
+        browseMonth(date: calMonth!.addComponent(component: .year, value: value))
+    }
+    
+    @objc func tappedToday(sender: UITapGestureRecognizer) {
         browseMonth(date: Date())
     }
     
@@ -115,7 +122,6 @@ class MonthViewController: UIViewController {
     }
     
 }
-
 
 extension MonthViewController: UITableViewDataSource {
 
@@ -156,20 +162,6 @@ extension MonthViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
-    }
-    
-}
-
-extension UILabel {
-    
-    convenience init(_ sfont: SFont, _ color: UIColor, _ text: String = "", _ tag: Int = 0) {
-        self.init()
-        self.text = text
-        self.font = sfont.font
-        self.textColor = color
-        self.tag = tag
-        accessibilityIdentifier = text
-        translatesAutoresizingMaskIntoConstraints = false
     }
     
 }

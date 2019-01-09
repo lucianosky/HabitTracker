@@ -80,24 +80,9 @@ struct CalMonth {
         return dateFormatter.string(from: firstMonthDate)
     }
     
-    func prevMonth() -> Date {
+    func addComponent(component: Calendar.Component, value: Int) -> Date {
         // TODO optional
-        return Calendar.current.date(byAdding: DateComponents(month: -1), to: firstMonthDate)!
-    }
-    
-    func nextMonth() -> Date {
-        // TODO optional
-        return Calendar.current.date(byAdding: DateComponents(month: 1), to: firstMonthDate)!
-    }
-    
-    func prevYear() -> Date {
-        // TODO optional
-        return Calendar.current.date(byAdding: DateComponents(year: -1), to: firstMonthDate)!
-    }
-    
-    func nextYear() -> Date {
-        // TODO optional
-        return Calendar.current.date(byAdding: DateComponents(year: 1), to: firstMonthDate)!
+        return Calendar.current.date(byAdding: component, value: value, to: firstMonthDate)!
     }
     
     static func getWeekHeaders() -> [String] {

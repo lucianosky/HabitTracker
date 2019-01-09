@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: move to view model
 enum DayState {
     case inactive
     case none
@@ -91,14 +92,15 @@ class DayView: UIView {
             .font: UIFont.systemFont(ofSize: 12.0),
             .foregroundColor: color
         ]
-        let aStr = NSAttributedString(string: text, attributes: attributes)
-        let aSize = aStr.size()
-        let x = (bounds.size.width - 2 - aSize.width) / 2 + 1
-        let y = (bounds.size.height - 2 - aSize.height) / 2 + 1
-        let rect2 = CGRect(x: x, y: y, width: aSize.width, height: aSize.height)
-        aStr.draw(in: rect2)
+        let attrStr = NSAttributedString(string: text, attributes: attributes)
+        let attrSize = attrStr.size()
+        let x = (bounds.size.width - 2 - attrSize.width) / 2 + 1
+        let y = (bounds.size.height - 2 - attrSize.height) / 2 + 1
+        let rect = CGRect(x: x, y: y, width: attrSize.width, height: attrSize.height)
+        attrStr.draw(in: rect)
     }
     
+    // TODO: move to view model
     @objc func handleTap(sender: UITapGestureRecognizer) {
         switch dayState {
         case .inactive: break
