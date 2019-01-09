@@ -103,10 +103,23 @@ struct CalMonth {
         return Calendar.current.date(byAdding: component, value: value, to: firstMonthDate)!
     }
     
-    static func getWeekHeaders() -> [String] {
-        // TODO: this works for weeks starting MONDAY
-        return [ "M", "T", "W", "T", "F", "S", "S" ]
+    func getWeekHeaders() -> [CalHeader] {
         //return Calendar.current.veryShortWeekdaySymbols
+
+        // TODO: this works for weeks starting MONDAY
+        //return [ "M", "T", "W", "T", "F", "S", "S" ]
+        
+        let array = ["S", "M", "T", "W", "T", "F", "S"]
+        let delta = startOfWeek - 1
+        var result: [CalHeader] = []
+        for i in 1...7 {
+            var j = i + delta
+            j = j <= 7 ? j : j - 7
+            let calHeader = CalHeader(text: array[j-1], startOfWeek: 1)
+            result.append(calHeader)
+        }
+        return result
+        
     }
     
 }
@@ -114,4 +127,9 @@ struct CalMonth {
 struct CalDay {
     let day: Int
     let fromMonth: Bool
+}
+
+struct CalHeader {
+    let text: String
+    let startOfWeek: Int
 }

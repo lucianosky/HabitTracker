@@ -135,10 +135,11 @@ extension MonthViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeekTableViewCell
         if indexPath.section == 0 {
-            let headers = CalMonth.getWeekHeaders()
+            // TODO: optional
+            let headers = (calMonth?.getWeekHeaders())!
             for tag in 0...6 {
                 if let dayView = cell.viewWithTag(tag+1) as? DayView {
-                    dayView.text = headers[tag]
+                    dayView.text = headers[tag].text
                     dayView.dayState = .inactive
                 }
             }
