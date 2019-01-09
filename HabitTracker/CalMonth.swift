@@ -15,20 +15,22 @@ struct CalMonth {
     let firstCalDate: Date
     let lastCalDate: Date
     let weeks: Int
+    let startOfWeek: Int
 
-    init() {
-        var components = Calendar.current.dateComponents([.year, .month], from: Date())
-        // TODO optionals
-        self.init(year: components.year!, month: components.month!)
-    }
-    
-    init (date: Date) {
+    init (date: Date, startOfWeek: Int = 1) {
         var components = Calendar.current.dateComponents([.year, .month], from: date)
         // TODO optionals
-        self.init(year: components.year!, month: components.month!)
+        self.init(year: components.year!, month: components.month!, startOfWeek: startOfWeek)
     }
     
-    init(year: Int, month: Int) {
+    init(year: Int, month: Int, startOfWeek: Int = 1) {
+        
+        func dayIndex(_ day: Int) -> Int {
+            var index = day - (startOfWeek - 1)
+            index = index > 0 ? index : index + 7
+            return index
+        }
+
         var components = DateComponents()
         components.year = year
         components.month = month
@@ -36,15 +38,30 @@ struct CalMonth {
         components.hour = 0
         components.minute = 0
         components.second = 0
+
+        self.startOfWeek = startOfWeek
         
         firstMonthDate = Calendar.current.date(from: components)!
         lastMonthDate = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstMonthDate)!
-        
+
         let firstWeekday = Calendar.current.component(.weekday, from: firstMonthDate)
         let lastWeekday = Calendar.current.component(.weekday, from: lastMonthDate)
+
+//        let deltaStartOfWeek = startOfWeek - 1
+//        var dayIndex = firstWeekday - deltaStartOfWeek
+//        dayIndex = dayIndex > 0 ? dayIndex : dayIndex + 7
+//        var deltaBeforeXXX = -dayIndex + 1
+//
+//        var dayIndex2 = lastWeekday - deltaStartOfWeek
+//        dayIndex2 = dayIndex2 > 0 ? dayIndex2 : dayIndex2 + 7
+//        let deltaAfterXXX = 7 - dayIndex2
+
+        let deltaBefore = -dayIndex(firstWeekday) + 1
+        let deltaAfter = 7 - dayIndex(lastWeekday)
+        
         // TODO: this works for weeks starting MONDAY
-        let deltaBefore = firstWeekday == 1 ? -6 : -firstWeekday + 2
-        let deltaAfter = lastWeekday == 1 ? 0 : 8 - lastWeekday
+//        let deltaBefore = firstWeekday == 1 ? -6 : -firstWeekday + 2
+//        let deltaAfter = lastWeekday == 1 ? 0 : 8 - lastWeekday
         
         firstCalDate = Calendar.current.date(byAdding: DateComponents(day: deltaBefore), to: firstMonthDate)!
         lastCalDate = Calendar.current.date(byAdding: DateComponents(day: deltaAfter), to: lastMonthDate)!
@@ -52,6 +69,7 @@ struct CalMonth {
         let days = Calendar.current.dateComponents([.day], from: firstCalDate, to: lastCalDate).day! + 1
         weeks = days / 7
     }
+    
     
     
     func getWeekDays(_ week: Int) -> [CalDay] {

@@ -11,6 +11,7 @@ import UIKit
 class MonthViewController: UIViewController {
     
     var calMonth: CalMonth?
+    let defaultStartOfWeek = 2
     
     let monthLabel = UILabel(.helveticaBold24, .darkText, "Month")
     let yearLabel = UILabel(.helveticaBold20, .darkText, "Year")
@@ -22,7 +23,7 @@ class MonthViewController: UIViewController {
         createBinds()
         // TODO:
         // readViewModel()
-        calMonth = CalMonth()
+        calMonth = CalMonth(date: Date(), startOfWeek: defaultStartOfWeek)
         refreshData()
     }
     
@@ -93,16 +94,14 @@ class MonthViewController: UIViewController {
     }
     
     @objc private func swipedMonth(gesture: UISwipeGestureRecognizer) {
-        let value = gesture.direction == .left ? -1 : 1
+        let value = gesture.direction == .left ? 1 : -1
         // TODO optional
         browseMonth(date: calMonth!.addComponent(component: .month, value: value))
     }
 
     @objc private func swipedYear(gesture: UISwipeGestureRecognizer) {
-        let value = gesture.direction == .left ? -1 : 1
+        let value = gesture.direction == .left ? 1 : -1
         // TODO optional
-//        let date = gesture.direction == .left ? calMonth!.prevYear() : calMonth!.nextYear()
-//        browseMonth(date: date)
         browseMonth(date: calMonth!.addComponent(component: .year, value: value))
     }
     
@@ -111,7 +110,7 @@ class MonthViewController: UIViewController {
     }
     
     private func browseMonth(date: Date) {
-        calMonth = CalMonth(date: date)
+        calMonth = CalMonth(date: date, startOfWeek: calMonth?.startOfWeek ?? defaultStartOfWeek)
         tableView.reloadData()
         refreshData()
     }
