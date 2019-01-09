@@ -11,7 +11,6 @@ import UIKit
 class WeekTableViewCell: UITableViewCell {
     
     let stack = UIStackView(.horizontal)
-    //var buttons = [UIButton]()
     var dayViews = [DayView]()
 
     required init?(coder aDecoder: NSCoder) {
@@ -24,10 +23,9 @@ class WeekTableViewCell: UITableViewCell {
         // TODO: optional
         //let font = UIFont(name: "Helvetica-Light", size: 18)!
         for i in 0...6 {
-            //let button = UIButton(.helveticaLight18, .black, "\(i)", i+1)
-            //stack.addArrangedSubview(button)
             let dayView = DayView()
             dayView.text = "\(i)"
+            dayView.tag = i+1
             stack.addArrangedSubview(dayView)
             dayViews.append(dayView)
             

@@ -12,11 +12,11 @@ class MonthViewController: UIViewController {
     
     var calMonth: CalMonth?
     
-    let monthLabel = UILabel(.helveticaBold24, .doneDark, "Month")
-    let yearLabel = UILabel(.helveticaBold20, .doneDark, "Year")
+    let monthLabel = UILabel(.helveticaBold24, .darkText, "Month")
+    let yearLabel = UILabel(.helveticaBold20, .darkText, "Year")
     let tableView = UITableView()
-    let prevButton = UIButton(.helveticaBold20, .doneDark, "<")
-    let nextButton = UIButton(.helveticaBold20, .doneDark, ">")
+    let prevButton = UIButton(.helveticaBold20, .darkText, "<")
+    let nextButton = UIButton(.helveticaBold20, .darkText, ">")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,20 +112,28 @@ extension MonthViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeekTableViewCell
-        /*
         if indexPath.section == 0 {
             let headers = CalMonth.getWeekHeaders()
             for tag in 0...6 {
-                if let button = cell.viewWithTag(tag+1) as? UIButton {
-                    button.setTitle("\(headers[tag])", for: .normal)
-                    button.setTitleColor(UIColor.gray, for: .normal)
-                    button.isEnabled = false
-                    button.isSelected = false
+                if let dayView = cell.viewWithTag(tag+1) as? DayView {
+                    dayView.text = headers[tag]
+                    dayView.dayState = .none
                 }
+//                if let button = cell.viewWithTag(tag+1) as? UIButton {
+//                    button.setTitle("\(headers[tag])", for: .normal)
+//                    button.setTitleColor(UIColor.gray, for: .normal)
+//                    button.isEnabled = false
+//                    button.isSelected = false
+//                }
             }
         } else {
             if let days = calMonth?.getWeekDays(indexPath.row) {
                 for tag in 0...6 {
+                    if let dayView = cell.viewWithTag(tag+1) as? DayView {
+                        dayView.text = "\(days[tag].day)"
+                        dayView.dayState = days[tag].fromMonth ? (tag % 2 == 0 ? .done : .notDone) : .none
+                    }
+                    /*
                     if let button = cell.viewWithTag(tag+1) as? UIButton {
                         let color = days[tag].fromMonth ? UIColor.black : UIColor.gray
                         button.isSelected = false
@@ -136,10 +144,10 @@ extension MonthViewController: UITableViewDataSource {
                             button.addTarget(self, action: #selector(MonthViewController.buttonClicked(_:)), for: .touchUpInside)
                         }
                     }
+                    */
                 }
             }
         }
-        */
         return cell
     }
     
