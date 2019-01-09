@@ -34,6 +34,7 @@ class MonthViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.backgroundColor = .background
+        tableView.isScrollEnabled = false
         
         view.backgroundColor = .background
         view.addSubview(tableView)
