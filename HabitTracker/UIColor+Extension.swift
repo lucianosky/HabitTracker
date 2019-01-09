@@ -26,6 +26,8 @@ extension UIColor {
     static let doneDark = UIColor(netHex: 0x108043)
     
     static let yellowLighter = UIColor(netHex: 0xFCF1CD)
+    static let yellowY = UIColor(netHex: 0xEEC200)
+    static let yellowDark = UIColor(netHex: 0x9C6F19)
 
 
 }

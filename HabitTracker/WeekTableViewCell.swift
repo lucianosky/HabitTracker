@@ -11,7 +11,8 @@ import UIKit
 class WeekTableViewCell: UITableViewCell {
     
     let stack = UIStackView(.horizontal)
-    var buttons = [UIButton]()
+    //var buttons = [UIButton]()
+    var dayViews = [DayView]()
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("\(#file) \(#function) not implemented")
@@ -26,7 +27,9 @@ class WeekTableViewCell: UITableViewCell {
             //let button = UIButton(.helveticaLight18, .black, "\(i)", i+1)
             //stack.addArrangedSubview(button)
             let dayView = DayView()
+            dayView.text = "\(i)"
             stack.addArrangedSubview(dayView)
+            dayViews.append(dayView)
             
         }
         contentView.addSubview(stack)
