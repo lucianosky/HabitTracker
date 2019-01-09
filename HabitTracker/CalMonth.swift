@@ -90,6 +90,16 @@ struct CalMonth {
         return Calendar.current.date(byAdding: DateComponents(month: 1), to: firstMonthDate)!
     }
     
+    func prevYear() -> Date {
+        // TODO optional
+        return Calendar.current.date(byAdding: DateComponents(year: -1), to: firstMonthDate)!
+    }
+    
+    func nextYear() -> Date {
+        // TODO optional
+        return Calendar.current.date(byAdding: DateComponents(year: 1), to: firstMonthDate)!
+    }
+    
     static func getWeekHeaders() -> [String] {
         // TODO: this works for weeks starting MONDAY
         return [ "M", "T", "W", "T", "F", "S", "S" ]

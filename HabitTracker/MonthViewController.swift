@@ -37,22 +37,33 @@ class MonthViewController: UIViewController {
         
         view.backgroundColor = .background
         view.addSubview(tableView)
-
         view.addSubview(yearLabel)
         view.addSubview(monthLabel)
         
         // TODO: Rx
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swiped(gesture:)))
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedMonth(gesture:)))
         swipeLeft.direction = .left
         self.view.addGestureRecognizer(swipeLeft)
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swiped(gesture:)))
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedMonth(gesture:)))
         swipeRight.direction = .right
         self.view.addGestureRecognizer(swipeRight)
 
+        let tapMonth = UITapGestureRecognizer(target: self, action: #selector(MonthViewController.tappedMonth(sender:)))
+        monthLabel.isUserInteractionEnabled = true
+        monthLabel.addGestureRecognizer(tapMonth)
+        yearLabel.addGestureRecognizer(tapMonth)
 
+        let swipeYearLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedYear(gesture:)))
+        swipeYearLeft.direction = .left
+        yearLabel.isUserInteractionEnabled = true
+        yearLabel.addGestureRecognizer(swipeYearLeft)
+        
+        let swipeYearRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedYear(gesture:)))
+        swipeYearRight.direction = .right
+        yearLabel.addGestureRecognizer(swipeYearRight)
+        
     }
-    
     func createConstraints() {
         let viewsDict: [String: Any] = [
             "tableView": tableView,
@@ -75,27 +86,31 @@ class MonthViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[yearLabel]-|", options: [], metrics: nil, views: viewsDict))
     }
 
-    @objc func swiped(gesture: UISwipeGestureRecognizer) {
-        let date: Date
-        if gesture.direction == .left || gesture.direction == .up {
-            // TODO optional
-            date = calMonth!.prevMonth()
-        } else {
-            // TODO optional
-            date = calMonth!.nextMonth()
-        }
+    @objc func swipedMonth(gesture: UISwipeGestureRecognizer) {
+        // TODO optional
+        let date = gesture.direction == .left ? calMonth!.prevMonth() : calMonth!.nextMonth()
+        browseMonth(date: date)
+    }
+
+    @objc func swipedYear(gesture: UISwipeGestureRecognizer) {
+        // TODO optional
+        let date = gesture.direction == .left ? calMonth!.prevYear() : calMonth!.nextYear()
+        browseMonth(date: date)
+    }
+    
+    @objc func tappedMonth(sender: UITapGestureRecognizer) {
+        browseMonth(date: Date())
+    }
+    
+    private func browseMonth(date: Date) {
         calMonth = CalMonth(date: date)
         tableView.reloadData()
         refreshData()
     }
-
-    func refreshData() {
+    
+    private func refreshData() {
         monthLabel.text = calMonth?.monthName()
         yearLabel.text = calMonth?.year()
-    }
-    
-    @objc func buttonClicked(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
     }
     
 }
