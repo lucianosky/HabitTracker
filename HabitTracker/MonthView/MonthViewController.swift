@@ -18,7 +18,7 @@ private struct Constants {
 class MonthViewController: UIViewController {
     
     var viewModel: MonthViewModel
-    var calMonth: CalMonth?
+//    var calMonth: CalMonth?
     private let disposeBag = DisposeBag()
 
     let monthLabel = UILabel(.helveticaBold24, .darkText, "")
@@ -41,13 +41,10 @@ class MonthViewController: UIViewController {
         createGestures()
         createBinds()
         viewModel.serviceCall()
-        refreshData()
     }
     
     private func createSubviews() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-//        tableView.dataSource = self
-//        tableView.delegate = self
         tableView.rowHeight = 50
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
@@ -72,11 +69,6 @@ class MonthViewController: UIViewController {
         ]
         
         // TODO - equal aligments H: monthLabel, yearLabel
-
-        //        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-40-[prevButton]", options: [], metrics: nil, views: viewsDict))
-        //        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-40-[nextButton]", options: [], metrics: nil, views: viewsDict))
-        //        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-40-[monthLabel]->=20-[prevButton]-8-[nextButton]-40-|", options: [], metrics: nil, views: viewsDict))
-
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-40-[monthLabel]-5-[yearLabel]-20-[tableView]-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[tableView]-|", options: [], metrics: nil, views: viewsDict))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[monthLabel]", options: [], metrics: nil, views: viewsDict))
@@ -111,6 +103,7 @@ class MonthViewController: UIViewController {
     
     private func createBinds() {
         tableView.rx.base.delegate = self
+
         viewModel.dataSource
             .bind(to: tableView.rx.items){ (tableView, row, calWeek) in
                 if let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellId, for: IndexPath(row: row, section: 0)) as? WeekTableViewCell {
@@ -119,33 +112,27 @@ class MonthViewController: UIViewController {
                 return UITableViewCell()
             }
             .disposed(by: disposeBag)
+        
+        viewModel.currentDate.subscribe(onNext: { [weak self] (date) in
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "LLLL"
+            self?.monthLabel.text = dateFormatter.string(from: date)
+            dateFormatter.dateFormat = "YYYY"
+            self?.yearLabel.text = dateFormatter.string(from: date)
+        })
+        .disposed(by: self.disposeBag)
     }
     
     @objc private func swipedMonth(gesture: UISwipeGestureRecognizer) {
-        let value = gesture.direction == .left ? 1 : -1
-        // TODO optional
-        browseMonth(date: calMonth!.addComponent(component: .month, value: value))
+        viewModel.browse(bySwipping: .month, toNext: gesture.direction == .left)
     }
 
     @objc private func swipedYear(gesture: UISwipeGestureRecognizer) {
-        let value = gesture.direction == .left ? 1 : -1
-        // TODO optional
-        browseMonth(date: calMonth!.addComponent(component: .year, value: value))
+        viewModel.browse(bySwipping: .year, toNext: gesture.direction == .left)
     }
     
     @objc func tappedToday(sender: UITapGestureRecognizer) {
-        browseMonth(date: Date())
-    }
-    
-    private func browseMonth(date: Date) {
-        calMonth = CalMonth(date: date, startOfWeek: calMonth?.startOfWeek ?? viewModel.defaultStartOfWeek)
-        tableView.reloadData()
-        refreshData()
-    }
-    
-    private func refreshData() {
-        monthLabel.text = calMonth?.monthName()
-        yearLabel.text = calMonth?.year()
+        viewModel.browseToday()
     }
     
 }

@@ -57,7 +57,16 @@ struct CalMonth {
         weeks = days / 7
     }
     
-    func getWeekDays(_ week: Int) -> [CalDay] {
+    func getWeeks() -> [CalWeek] {
+        var result = [CalWeek]()
+        result.append(CalWeek(isHeader: true, days: getWeekHeaders()))
+        for week in 0..<weeks {
+            result.append(CalWeek(isHeader: false, days: getWeekDays(week)))
+        }
+        return result
+    }
+    
+    private func getWeekDays(_ week: Int) -> [CalDay] {
         // TODO: optionals
         var date = Calendar.current.date(byAdding: DateComponents(day: week * 7), to: firstCalDate)!
         var calDays:[CalDay] = []
@@ -71,33 +80,7 @@ struct CalMonth {
         return calDays
     }
     
-    func getWeeks() -> [CalWeek] {
-        var result = [CalWeek]()
-        result.append(CalWeek(isHeader: true, days: getWeekHeaders()))
-        for week in 0..<weeks {
-            result.append(CalWeek(isHeader: false, days: getWeekDays(week)))
-        }
-        return result
-    }
-    
-    func monthName() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "LLLL"
-        return dateFormatter.string(from: firstMonthDate)
-    }
-    
-    func year() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY"
-        return dateFormatter.string(from: firstMonthDate)
-    }
-    
-    func addComponent(component: Calendar.Component, value: Int) -> Date {
-        // TODO optional
-        return Calendar.current.date(byAdding: component, value: value, to: firstMonthDate)!
-    }
-    
-    func getWeekHeaders() -> [CalDay] {
+    private func getWeekHeaders() -> [CalDay] {
         // TODO: Calendar.current.veryShortWeekdaySymbols
         let shortSymbols = ["S", "M", "T", "W", "T", "F", "S"]
         let delta = startOfWeek - 1
@@ -109,6 +92,16 @@ struct CalMonth {
             result.append(calHeader)
         }
         return result
+    }
+    
+    func browse(bySwipping component: Calendar.Component, toNext: Bool) -> CalMonth {
+        // TODO optional
+        let date = Calendar.current.date(byAdding: component, value: toNext ? 1 : -1, to: firstMonthDate)!
+        return CalMonth(date: date, startOfWeek: startOfWeek)
+    }
+    
+    func browseToday() -> CalMonth {
+        return CalMonth(date: Date(), startOfWeek: startOfWeek)
     }
     
 }

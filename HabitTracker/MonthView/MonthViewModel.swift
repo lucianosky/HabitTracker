@@ -12,8 +12,10 @@ import RxSwift
 class MonthViewModel {
     
     private var calMonth: CalMonth
+    private let defaultStartOfWeek = 2
+
     let dataSource: PublishSubject<[CalWeek]> = PublishSubject()
-    let defaultStartOfWeek = 2
+    let currentDate: PublishSubject<Date> = PublishSubject()
 
     init() {
         calMonth = CalMonth(date: Date())
@@ -22,7 +24,22 @@ class MonthViewModel {
     
     // TODO: implement service
     func serviceCall() {
-         dataSource.onNext(calMonth.getWeeks())
+        emit()
+    }
+    
+    func browse(bySwipping component: Calendar.Component, toNext: Bool) {
+        calMonth = calMonth.browse(bySwipping: component, toNext: toNext)
+        emit()
+    }
+    
+    func browseToday() {
+        calMonth = calMonth.browseToday()
+        emit()
+    }
+    
+    private func emit() {
+        dataSource.onNext(calMonth.getWeeks())
+        currentDate.onNext(calMonth.firstMonthDate)
     }
     
     
