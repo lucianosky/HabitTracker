@@ -43,8 +43,9 @@ class DayView: UIView {
 
         backgroundColor = .background
         translatesAutoresizingMaskIntoConstraints = false
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[self(40)]", options: [], metrics: nil, views: viewsDict))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[self(40)]", options: [], metrics: nil, views: viewsDict))
+        
+        activateConstraints("V:[self(40)]", views: viewsDict)
+        activateConstraints("H:[self(40)]", views: viewsDict)
         
         // TODO: Rx
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))

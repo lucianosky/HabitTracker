@@ -35,8 +35,8 @@ class WeekTableViewCell: UITableViewCell {
             "stack" : stack,
         ]
         
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[stack]|", options: [], metrics: nil, views: viewsDict))
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[stack]|", options: [], metrics: nil, views: viewsDict))
+        contentView.activateConstraints("V:|[stack]|", views: viewsDict)
+        contentView.activateConstraints("H:|[stack]|", views: viewsDict)
     }
     
     func configure(from calWeek: CalWeek) -> WeekTableViewCell {

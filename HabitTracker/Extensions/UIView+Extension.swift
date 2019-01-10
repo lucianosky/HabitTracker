@@ -50,4 +50,9 @@ extension UIView {
         return cons
     }
 
+    @discardableResult func activateConstraints(_ visualFormat: String, views: [String : Any], metrics: [String : Any]? = nil) -> [NSLayoutConstraint] {
+        
+        return NSLayoutConstraint.activate(visualFormat, views: views, metrics: metrics)
+    }
+
 }
