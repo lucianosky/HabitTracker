@@ -7,16 +7,22 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+
+
+private struct Constants {
+    static let tableCellId = "weekCell"
+}
 
 class MonthViewController: UIViewController {
     
     var viewModel: MonthViewModel
-
     var calMonth: CalMonth?
-    let defaultStartOfWeek = 2
-    
-    let monthLabel = UILabel(.helveticaBold24, .darkText, "Month")
-    let yearLabel = UILabel(.helveticaBold20, .darkText, "Year")
+    private let disposeBag = DisposeBag()
+
+    let monthLabel = UILabel(.helveticaBold24, .darkText, "")
+    let yearLabel = UILabel(.helveticaBold20, .darkText, "")
     let tableView = UITableView()
     
     init(viewModel: MonthViewModel? = nil) {
@@ -32,21 +38,20 @@ class MonthViewController: UIViewController {
         super.viewDidLoad()
         createSubviews()
         createConstraints()
+        createGestures()
         createBinds()
-        // TODO:
-        // readViewModel()
-        calMonth = CalMonth(date: Date(), startOfWeek: defaultStartOfWeek)
+        viewModel.serviceCall()
         refreshData()
     }
     
     private func createSubviews() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.dataSource = self
-        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.delegate = self
         tableView.rowHeight = 50
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
-        tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: Constants.tableCellId)
         tableView.backgroundColor = .background
         tableView.isScrollEnabled = false
         
@@ -78,8 +83,7 @@ class MonthViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[yearLabel]-|", options: [], metrics: nil, views: viewsDict))
     }
 
-    // TODO: Rx
-    private func createBinds() {
+    private func createGestures() {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedMonth(gesture:)))
         swipeLeft.direction = .left
         self.view.addGestureRecognizer(swipeLeft)
@@ -91,7 +95,7 @@ class MonthViewController: UIViewController {
         let tapMonth = UITapGestureRecognizer(target: self, action: #selector(MonthViewController.tappedToday(sender:)))
         monthLabel.isUserInteractionEnabled = true
         monthLabel.addGestureRecognizer(tapMonth)
-
+        
         let tapYear = UITapGestureRecognizer(target: self, action: #selector(MonthViewController.tappedToday(sender:)))
         yearLabel.isUserInteractionEnabled = true
         yearLabel.addGestureRecognizer(tapYear)
@@ -103,6 +107,18 @@ class MonthViewController: UIViewController {
         let swipeYearRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedYear(gesture:)))
         swipeYearRight.direction = .right
         yearLabel.addGestureRecognizer(swipeYearRight)
+    }
+    
+    private func createBinds() {
+        tableView.rx.base.delegate = self
+        viewModel.dataSource
+            .bind(to: tableView.rx.items){ (tableView, row, calWeek) in
+                if let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellId, for: IndexPath(row: row, section: 0)) as? WeekTableViewCell {
+                    return cell.configure(from: calWeek)
+                }
+                return UITableViewCell()
+            }
+            .disposed(by: disposeBag)
     }
     
     @objc private func swipedMonth(gesture: UISwipeGestureRecognizer) {
@@ -122,7 +138,7 @@ class MonthViewController: UIViewController {
     }
     
     private func browseMonth(date: Date) {
-        calMonth = CalMonth(date: date, startOfWeek: calMonth?.startOfWeek ?? defaultStartOfWeek)
+        calMonth = CalMonth(date: date, startOfWeek: calMonth?.startOfWeek ?? viewModel.defaultStartOfWeek)
         tableView.reloadData()
         refreshData()
     }
@@ -134,41 +150,41 @@ class MonthViewController: UIViewController {
     
 }
 
-extension MonthViewController: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : calMonth?.weeks ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeekTableViewCell
-        if indexPath.section == 0 {
-            // TODO: optional
-            let headers = (calMonth?.getWeekHeaders())!
-            for tag in 0...6 {
-                if let dayView = cell.viewWithTag(tag+1) as? DayView {
-                    dayView.text = headers[tag].text
-                    dayView.dayState = .inactive
-                }
-            }
-        } else {
-            if let days = calMonth?.getWeekDays(indexPath.row) {
-                for tag in 0...6 {
-                    if let dayView = cell.viewWithTag(tag+1) as? DayView {
-                        dayView.text = "\(days[tag].day)"
-                        dayView.dayState = days[tag].fromMonth ? .none : .inactive
-                    }
-                }
-            }
-        }
-        return cell
-    }
-    
-}
+//extension MonthViewController: UITableViewDataSource {
+//
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return calMonth == nil ? 0 : 2
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return calMonth == nil ? 0 : (section == 0 ? 1 : calMonth!.weeks)
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeekTableViewCell
+//        if indexPath.section == 0 {
+//            // TODO: optional
+//            let headers = (calMonth?.getWeekHeaders())!
+//            for tag in 0...6 {
+//                if let dayView = cell.viewWithTag(tag+1) as? DayView {
+//                    dayView.text = headers[tag].text
+//                    dayView.dayState = .inactive
+//                }
+//            }
+//        } else {
+//            if let days = calMonth?.getWeekDays(indexPath.row) {
+//                for tag in 0...6 {
+//                    if let dayView = cell.viewWithTag(tag+1) as? DayView {
+//                        dayView.text = "\(days[tag].day)"
+//                        dayView.dayState = days[tag].fromMonth ? .none : .inactive
+//                    }
+//                }
+//            }
+//        }
+//        return cell
+//    }
+//
+//}
 
 extension MonthViewController : UITableViewDelegate {
     

@@ -5,4 +5,5 @@ target 'HabitTracker' do
 
   pod 'RxAtomic', '~> 4.4'
   pod 'RxSwift', '~> 4.4'
+  pod 'RxCocoa', '~> 4.4'
 end

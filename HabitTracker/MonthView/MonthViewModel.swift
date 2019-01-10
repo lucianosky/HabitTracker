@@ -7,10 +7,23 @@
 //
 
 import Foundation
+import RxSwift
 
 class MonthViewModel {
     
+    private var calMonth: CalMonth
+    let dataSource: PublishSubject<[CalWeek]> = PublishSubject()
+    let defaultStartOfWeek = 2
+
     init() {
+        calMonth = CalMonth(date: Date())
+        serviceCall()
     }
+    
+    // TODO: implement service
+    func serviceCall() {
+         dataSource.onNext(calMonth.getWeeks())
+    }
+    
     
 }
