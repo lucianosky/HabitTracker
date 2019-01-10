@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 
 private struct Constants {
@@ -18,7 +19,6 @@ private struct Constants {
 class MonthViewController: UIViewController {
     
     var viewModel: MonthViewModel
-//    var calMonth: CalMonth?
     private let disposeBag = DisposeBag()
 
     let monthLabel = UILabel(.helveticaBold24, .darkText, "")
@@ -38,7 +38,6 @@ class MonthViewController: UIViewController {
         super.viewDidLoad()
         createSubviews()
         createConstraints()
-        createGestures()
         createBinds()
         viewModel.serviceCall()
     }
@@ -51,6 +50,10 @@ class MonthViewController: UIViewController {
         tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: Constants.tableCellId)
         tableView.backgroundColor = .background
         tableView.isScrollEnabled = false
+        
+        // TODO - init
+        monthLabel.isUserInteractionEnabled = true
+        yearLabel.isUserInteractionEnabled = true
         
         view.backgroundColor = .background
         view.addSubview(tableView)
@@ -75,32 +78,6 @@ class MonthViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[yearLabel]-|", options: [], metrics: nil, views: viewsDict))
     }
 
-    private func createGestures() {
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedMonth(gesture:)))
-        swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedMonth(gesture:)))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        let tapMonth = UITapGestureRecognizer(target: self, action: #selector(MonthViewController.tappedToday(sender:)))
-        monthLabel.isUserInteractionEnabled = true
-        monthLabel.addGestureRecognizer(tapMonth)
-        
-        let tapYear = UITapGestureRecognizer(target: self, action: #selector(MonthViewController.tappedToday(sender:)))
-        yearLabel.isUserInteractionEnabled = true
-        yearLabel.addGestureRecognizer(tapYear)
-        
-        let swipeYearLeft = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedYear(gesture:)))
-        swipeYearLeft.direction = .left
-        yearLabel.addGestureRecognizer(swipeYearLeft)
-        
-        let swipeYearRight = UISwipeGestureRecognizer(target: self, action: #selector(MonthViewController.swipedYear(gesture:)))
-        swipeYearRight.direction = .right
-        yearLabel.addGestureRecognizer(swipeYearRight)
-    }
-    
     private func createBinds() {
         tableView.rx.base.delegate = self
 
@@ -113,26 +90,47 @@ class MonthViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        viewModel.currentDate.subscribe(onNext: { [weak self] (date) in
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "LLLL"
-            self?.monthLabel.text = dateFormatter.string(from: date)
-            dateFormatter.dateFormat = "YYYY"
-            self?.yearLabel.text = dateFormatter.string(from: date)
-        })
-        .disposed(by: self.disposeBag)
-    }
-    
-    @objc private func swipedMonth(gesture: UISwipeGestureRecognizer) {
-        viewModel.browse(bySwipping: .month, toNext: gesture.direction == .left)
-    }
+        viewModel.currentDate
+            .subscribe(onNext: { [weak self] (date) in
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "LLLL"
+                self?.monthLabel.text = dateFormatter.string(from: date)
+                dateFormatter.dateFormat = "YYYY"
+                self?.yearLabel.text = dateFormatter.string(from: date)
+            })
+            .disposed(by: self.disposeBag)
+        
+        monthLabel.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.browseToday()
+            })
+            .disposed(by: self.disposeBag)
 
-    @objc private func swipedYear(gesture: UISwipeGestureRecognizer) {
-        viewModel.browse(bySwipping: .year, toNext: gesture.direction == .left)
-    }
-    
-    @objc func tappedToday(sender: UITapGestureRecognizer) {
-        viewModel.browseToday()
+        yearLabel.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.browseToday()
+            })
+            .disposed(by: self.disposeBag)
+        
+        yearLabel.rx
+            .swipeGesture([.left, .right])
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] gesture in
+                self?.viewModel.browse(bySwipping: .year, toNext: gesture.direction == .left)
+            })
+            .disposed(by: self.disposeBag)
+        
+        view.rx
+            .swipeGesture([.left, .right])
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] gesture in
+                self?.viewModel.browse(bySwipping: .month, toNext: gesture.direction == .left)
+            })
+            .disposed(by: disposeBag)
     }
     
 }
