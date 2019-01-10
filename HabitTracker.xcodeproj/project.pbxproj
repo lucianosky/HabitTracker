@@ -15,6 +15,7 @@
 		6E8410D921E68E540076536B /* UIStackView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8410D821E68E540076536B /* UIStackView+Extension.swift */; };
 		6E8410DB21E68EBF0076536B /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8410DA21E68EBF0076536B /* String+Extension.swift */; };
 		6E8410DD21E68F040076536B /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8410DC21E68F040076536B /* UIFont+Extension.swift */; };
+		6E8410E121E7AC9C0076536B /* MonthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8410E021E7AC9C0076536B /* MonthViewModel.swift */; };
 		6E97279321E008A400BDC68A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E97279221E008A400BDC68A /* AppDelegate.swift */; };
 		6E97279521E008A400BDC68A /* MonthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E97279421E008A400BDC68A /* MonthViewController.swift */; };
 		6E97279A21E008A800BDC68A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E97279921E008A800BDC68A /* Assets.xcassets */; };
@@ -50,6 +51,7 @@
 		6E8410D821E68E540076536B /* UIStackView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extension.swift"; sourceTree = "<group>"; };
 		6E8410DA21E68EBF0076536B /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		6E8410DC21E68F040076536B /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
+		6E8410E021E7AC9C0076536B /* MonthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewModel.swift; sourceTree = "<group>"; };
 		6E97278F21E008A400BDC68A /* HabitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E97279221E008A400BDC68A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E97279421E008A400BDC68A /* MonthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,25 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		6E8410DE21E7ABE40076536B /* MonthView */ = {
+			isa = PBXGroup;
+			children = (
+				6E97279421E008A400BDC68A /* MonthViewController.swift */,
+				6E28452A21E3920E00C4CC1F /* WeekTableViewCell.swift */,
+				6E28452E21E5510F00C4CC1F /* DayView.swift */,
+				6E8410E021E7AC9C0076536B /* MonthViewModel.swift */,
+			);
+			path = MonthView;
+			sourceTree = "<group>";
+		};
+		6E8410DF21E7AC0D0076536B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6E9727C021E122BA00BDC68A /* CalMonth.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		6E97278621E008A300BDC68A = {
 			isa = PBXGroup;
 			children = (
@@ -126,12 +147,10 @@
 		6E97279121E008A400BDC68A /* HabitTracker */ = {
 			isa = PBXGroup;
 			children = (
+				6E8410DE21E7ABE40076536B /* MonthView */,
+				6E8410DF21E7AC0D0076536B /* Model */,
 				6E8410D321E68B560076536B /* Extensions */,
 				6E97279221E008A400BDC68A /* AppDelegate.swift */,
-				6E97279421E008A400BDC68A /* MonthViewController.swift */,
-				6E28452A21E3920E00C4CC1F /* WeekTableViewCell.swift */,
-				6E28452E21E5510F00C4CC1F /* DayView.swift */,
-				6E9727C021E122BA00BDC68A /* CalMonth.swift */,
 				6E97279921E008A800BDC68A /* Assets.xcassets */,
 				6E97279B21E008A800BDC68A /* LaunchScreen.storyboard */,
 				6E97279E21E008A800BDC68A /* Info.plist */,
@@ -288,6 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E8410DB21E68EBF0076536B /* String+Extension.swift in Sources */,
+				6E8410E121E7AC9C0076536B /* MonthViewModel.swift in Sources */,
 				6E97279521E008A400BDC68A /* MonthViewController.swift in Sources */,
 				6E28452F21E5511000C4CC1F /* DayView.swift in Sources */,
 				6E28452B21E3920E00C4CC1F /* WeekTableViewCell.swift in Sources */,

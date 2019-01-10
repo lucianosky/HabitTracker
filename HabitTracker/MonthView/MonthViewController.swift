@@ -10,12 +10,24 @@ import UIKit
 
 class MonthViewController: UIViewController {
     
+    var viewModel: MonthViewModel
+
     var calMonth: CalMonth?
     let defaultStartOfWeek = 2
     
     let monthLabel = UILabel(.helveticaBold24, .darkText, "Month")
     let yearLabel = UILabel(.helveticaBold20, .darkText, "Year")
     let tableView = UITableView()
+    
+    init(viewModel: MonthViewModel? = nil) {
+        self.viewModel = viewModel ?? MonthViewModel()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("\(#file) \(#function) not implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         createSubviews()
