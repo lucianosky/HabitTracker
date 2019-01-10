@@ -77,7 +77,7 @@ struct CalMonth {
         for _ in 0...6 {
             let day = Calendar.current.dateComponents([.day], from: date).day ?? 0
             let fromMonth = date >= firstMonthDate && date <= lastMonthDate
-            let calDay = CalDay(day: day, fromMonth: fromMonth)
+            let calDay = CalDay(text: String(day), fromMonth: fromMonth)
             calDays.append(calDay)
             date = Calendar.current.date(byAdding: DateComponents(day: 1), to: date)!
         }
@@ -86,8 +86,9 @@ struct CalMonth {
     
     func getWeeks() -> [CalWeek] {
         var result = [CalWeek]()
+        result.append(CalWeek(isHeader: true, days: getWeekHeaders()))
         for week in 0..<weeks {
-            result.append(CalWeek(days: getWeekDays(week)))
+            result.append(CalWeek(isHeader: false, days: getWeekDays(week)))
         }
         return result
     }
@@ -109,7 +110,7 @@ struct CalMonth {
         return Calendar.current.date(byAdding: component, value: value, to: firstMonthDate)!
     }
     
-    func getWeekHeaders() -> [CalHeader] {
+    func getWeekHeaders() -> [CalDay] {
         //return Calendar.current.veryShortWeekdaySymbols
 
         // TODO: this works for weeks starting MONDAY
@@ -117,11 +118,11 @@ struct CalMonth {
         
         let array = ["S", "M", "T", "W", "T", "F", "S"]
         let delta = startOfWeek - 1
-        var result: [CalHeader] = []
+        var result: [CalDay] = []
         for i in 1...7 {
             var j = i + delta
             j = j <= 7 ? j : j - 7
-            let calHeader = CalHeader(text: array[j-1], startOfWeek: j)
+            let calHeader = CalDay(text: array[j-1], fromMonth: false)
             result.append(calHeader)
         }
         return result
@@ -131,15 +132,16 @@ struct CalMonth {
 }
 
 struct CalWeek {
+    let isHeader: Bool
     let days: [CalDay]
 }
 
 struct CalDay {
-    let day: Int
+    let text: String
     let fromMonth: Bool
 }
 
-struct CalHeader {
-    let text: String
-    let startOfWeek: Int
-}
+//struct CalHeader {
+//    let text: String
+//    let startOfWeek: Int
+//}

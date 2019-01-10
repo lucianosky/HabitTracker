@@ -45,7 +45,7 @@ class WeekTableViewCell: UITableViewCell {
     func configure(from calWeek: CalWeek) -> WeekTableViewCell {
         for tag in 0...6 {
             if let dayView = viewWithTag(tag+1) as? DayView {
-                dayView.text = "\(calWeek.days[tag].day)"
+                dayView.text = calWeek.days[tag].text
                 dayView.dayState = calWeek.days[tag].fromMonth ? .none : .inactive
             }
         }
