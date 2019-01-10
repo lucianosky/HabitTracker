@@ -51,10 +51,6 @@ class MonthViewController: UIViewController {
         tableView.backgroundColor = .background
         tableView.isScrollEnabled = false
         
-        // TODO - init
-        monthLabel.isUserInteractionEnabled = true
-        yearLabel.isUserInteractionEnabled = true
-        
         view.backgroundColor = .background
         view.addSubview(tableView)
         view.addSubview(yearLabel)
@@ -71,11 +67,10 @@ class MonthViewController: UIViewController {
             // http://germanylandofinnovation.com/questions/29066/swift-safe-area-layout-guide-und-visual-format-language
         ]
         
-        // TODO - equal aligments H: monthLabel, yearLabel
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[topGuide]-40-[monthLabel]-5-[yearLabel]-20-[tableView]-|", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[tableView]-|", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[monthLabel]", options: [], metrics: nil, views: viewsDict))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-30-[yearLabel]-|", options: [], metrics: nil, views: viewsDict))
+        activateConstraints("V:[topGuide]-40-[monthLabel]-5-[yearLabel]-20-[tableView]-|", views: viewsDict)
+        activateConstraints("H:|-[tableView]-|", views: viewsDict)
+        activateConstraints("H:|-30-[monthLabel]", views: viewsDict)
+        yearLabel.equalConstraints([.left], to: monthLabel)
     }
 
     private func createBinds() {
