@@ -39,9 +39,6 @@ class WeekTableViewCell: UITableViewCell {
         contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[stack]|", options: [], metrics: nil, views: viewsDict))
     }
     
-    
-    // TODO -> HeaderLine
-
     func configure(from calWeek: CalWeek) -> WeekTableViewCell {
         for tag in 0...6 {
             if let dayView = viewWithTag(tag+1) as? DayView {

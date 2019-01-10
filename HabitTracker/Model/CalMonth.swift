@@ -47,21 +47,8 @@ struct CalMonth {
         let firstWeekday = Calendar.current.component(.weekday, from: firstMonthDate)
         let lastWeekday = Calendar.current.component(.weekday, from: lastMonthDate)
 
-//        let deltaStartOfWeek = startOfWeek - 1
-//        var dayIndex = firstWeekday - deltaStartOfWeek
-//        dayIndex = dayIndex > 0 ? dayIndex : dayIndex + 7
-//        var deltaBeforeXXX = -dayIndex + 1
-//
-//        var dayIndex2 = lastWeekday - deltaStartOfWeek
-//        dayIndex2 = dayIndex2 > 0 ? dayIndex2 : dayIndex2 + 7
-//        let deltaAfterXXX = 7 - dayIndex2
-
         let deltaBefore = -dayIndex(firstWeekday) + 1
         let deltaAfter = 7 - dayIndex(lastWeekday)
-        
-        // TODO: this works for weeks starting MONDAY
-//        let deltaBefore = firstWeekday == 1 ? -6 : -firstWeekday + 2
-//        let deltaAfter = lastWeekday == 1 ? 0 : 8 - lastWeekday
         
         firstCalDate = Calendar.current.date(byAdding: DateComponents(day: deltaBefore), to: firstMonthDate)!
         lastCalDate = Calendar.current.date(byAdding: DateComponents(day: deltaAfter), to: lastMonthDate)!
@@ -111,22 +98,17 @@ struct CalMonth {
     }
     
     func getWeekHeaders() -> [CalDay] {
-        //return Calendar.current.veryShortWeekdaySymbols
-
-        // TODO: this works for weeks starting MONDAY
-        //return [ "M", "T", "W", "T", "F", "S", "S" ]
-        
-        let array = ["S", "M", "T", "W", "T", "F", "S"]
+        // TODO: Calendar.current.veryShortWeekdaySymbols
+        let shortSymbols = ["S", "M", "T", "W", "T", "F", "S"]
         let delta = startOfWeek - 1
         var result: [CalDay] = []
         for i in 1...7 {
             var j = i + delta
             j = j <= 7 ? j : j - 7
-            let calHeader = CalDay(text: array[j-1], fromMonth: false)
+            let calHeader = CalDay(text: shortSymbols[j-1], fromMonth: false)
             result.append(calHeader)
         }
         return result
-        
     }
     
 }
@@ -140,8 +122,3 @@ struct CalDay {
     let text: String
     let fromMonth: Bool
 }
-
-//struct CalHeader {
-//    let text: String
-//    let startOfWeek: Int
-//}

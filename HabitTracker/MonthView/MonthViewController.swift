@@ -150,42 +150,6 @@ class MonthViewController: UIViewController {
     
 }
 
-//extension MonthViewController: UITableViewDataSource {
-//
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return calMonth == nil ? 0 : 2
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return calMonth == nil ? 0 : (section == 0 ? 1 : calMonth!.weeks)
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WeekTableViewCell
-//        if indexPath.section == 0 {
-//            // TODO: optional
-//            let headers = (calMonth?.getWeekHeaders())!
-//            for tag in 0...6 {
-//                if let dayView = cell.viewWithTag(tag+1) as? DayView {
-//                    dayView.text = headers[tag].text
-//                    dayView.dayState = .inactive
-//                }
-//            }
-//        } else {
-//            if let days = calMonth?.getWeekDays(indexPath.row) {
-//                for tag in 0...6 {
-//                    if let dayView = cell.viewWithTag(tag+1) as? DayView {
-//                        dayView.text = "\(days[tag].day)"
-//                        dayView.dayState = days[tag].fromMonth ? .none : .inactive
-//                    }
-//                }
-//            }
-//        }
-//        return cell
-//    }
-//
-//}
-
 extension MonthViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
