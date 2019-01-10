@@ -115,7 +115,7 @@ struct CalMonth {
         for i in 1...7 {
             var j = i + delta
             j = j <= 7 ? j : j - 7
-            let calHeader = CalHeader(text: array[j-1], startOfWeek: 1)
+            let calHeader = CalHeader(text: array[j-1], startOfWeek: j)
             result.append(calHeader)
         }
         return result
