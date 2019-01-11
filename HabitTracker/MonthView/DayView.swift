@@ -8,23 +8,7 @@
 
 import UIKit
 
-// TODO - review
-//import RxSwift
-//import RxCocoa
-//import RxGesture
-
-// TODO: move to view model
-enum DayState {
-    case inactive
-    case none
-    case done
-    case notDone
-}
-
 class DayView: UIView {
-    
-    // TODO - review
-//    private let disposeBag = DisposeBag()
     
     var text: String = "0" {
         didSet {
@@ -32,7 +16,13 @@ class DayView: UIView {
         }
     }
     
-    var dayState: DayState = .none {
+    var habitState: HabitState = .none {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
+    
+    var active: Bool = true {
         didSet {
             self.setNeedsDisplay()
         }
@@ -56,21 +46,6 @@ class DayView: UIView {
         
         activateConstraints("V:[self(40)]", views: viewsDict)
         activateConstraints("H:[self(40)]", views: viewsDict)
-
-        // TODO: review
-//        self.rx
-//            .tapGesture()
-//            .when(.recognized)
-//            .subscribe(onNext: { [weak self] _ in
-//                guard let self = self else { return }
-//                switch self.dayState {
-//                case .inactive: break
-//                case .none: self.dayState = .done
-//                case .done: self.dayState = .notDone
-//                case .notDone: self.dayState = .none
-//                }
-//            })
-//            .disposed(by: self.disposeBag)
     }
     
     override func draw(_ rect: CGRect) {
@@ -79,16 +54,19 @@ class DayView: UIView {
     }
     
     private func drawCircle() {
-        switch dayState {
-        case .inactive, .none:
-            UIColor.background.setStroke()
-            UIColor.background.setFill()
-        case .done:
-            UIColor.greenG.setStroke()
-            UIColor.greenLighter.setFill()
-        case .notDone:
-            UIColor.yellowY.setStroke()
-            UIColor.yellowLighter.setFill()
+        // colors for inactive and none
+        UIColor.background.setStroke()
+        UIColor.background.setFill()
+        if active {
+            switch habitState {
+            case .none: break
+            case .done:
+                UIColor.greenG.setStroke()
+                UIColor.greenLighter.setFill()
+            case .notDone:
+                UIColor.yellowY.setStroke()
+                UIColor.yellowLighter.setFill()
+            }
         }
 
         let rect = CGRect(x: 1, y: 1, width: bounds.size.width-2, height: bounds.height-2)
@@ -100,11 +78,14 @@ class DayView: UIView {
     
     private func drawText() {
         let color: UIColor
-        switch dayState {
-        case .inactive: color = .inactiveText
-        case .none: color = .darkText
-        case .done: color = .greenText
-        case .notDone: color = .yellowText
+        if active {
+            switch habitState {
+            case .none: color = .darkText
+            case .done: color = .greenText
+            case .notDone: color = .yellowText
+            }
+        } else {
+            color = .inactiveText
         }
 
         let paragraphStyle = NSMutableParagraphStyle()

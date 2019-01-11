@@ -130,8 +130,8 @@ class MonthViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    func dayTouched(date: Date) -> (Bool, HabitState) {
-        return viewModel.dayTouched(date: date)
+    func setHabitState(date: Date) -> (Bool, HabitState) {
+        return viewModel.setHabitState(date: date)
     }
     
 }

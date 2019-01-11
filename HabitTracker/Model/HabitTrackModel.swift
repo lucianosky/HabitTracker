@@ -23,37 +23,13 @@ class HabitTrackModel {
     private init() {
     }
 
-//    func setHabit(date: Date, state: HabitState) {
-  
-    //        if currentState == nil && state == .none { return }
-    //        if currentState == state && state != .none { return }
-    //        habitsDict[date] = state
-    
-    //        if currentState == nil {
-    //            if state == .none {
-    //                return
-    //            } else {
-    //                habitsDict[date] = state
-    //            }
-    //        } else {
-    //            if state == .none {
-    //                habitsDict[date] = state
-    //            } else {
-    //                if currentState == state {
-    //                    return
-    //                } else {
-    //                    habitsDict[date] = state
-    //                }
-    //            }
-    //        }
-
-    func setHabit(date: Date) -> (Bool, HabitState) {
-        let currentState = habitsDict[date]
-        if currentState == nil {
+    func setHabitState(date: Date) -> (Bool, HabitState) {
+        let habitState = habitsDict[date]
+        if habitState == nil {
             habitsDict[date] = .done
         } else {
-            switch currentState! {
-            case .none: habitsDict[date] = nil // TODO - should not happen
+            switch habitState! {
+            case .none: habitsDict[date] = .done // TODO - LOG @ firebase, should not happen
             case .done: habitsDict[date] = .notDone
             case .notDone: habitsDict[date] = nil
             }
@@ -63,11 +39,11 @@ class HabitTrackModel {
         return (true, habitsDict[date] ?? .none)
     }
     
-    func getHabit(date: Date) -> HabitState {
-        guard let currentState = habitsDict[date] else {
+    func getHabitState(date: Date) -> HabitState {
+        guard let habitState = habitsDict[date] else {
             return .none
         }
-        return currentState
+        return habitState
     }
     
     // TODO

@@ -42,12 +42,12 @@ class MonthViewModel {
         currentDate.onNext(calMonth.firstMonthDate)
     }
     
-    func dayTouched(date: Date) -> (Bool, HabitState) {
-        return HabitTrackModel.shared.setHabit(date: date)
+    func setHabitState(date: Date) -> (Bool, HabitState) {
+        return HabitTrackModel.shared.setHabitState(date: date)
     }
     
-    func dayState(date: Date) -> HabitState {
-        return HabitTrackModel.shared.getHabit(date: date)
+    func getHabitState(date: Date) -> HabitState {
+        return HabitTrackModel.shared.getHabitState(date: date)
     }
     
     

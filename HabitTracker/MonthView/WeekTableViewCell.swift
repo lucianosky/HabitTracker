@@ -37,24 +37,11 @@ class WeekTableViewCell: UITableViewCell {
                 .subscribe(onNext: { _ in
                     // TODO log if null
                     if let date = dayView.date {
-                        let (result, newState) = self.monthViewController?.dayTouched(date: date) ?? (false, .none)
+                        let (result, newState) = self.monthViewController?.setHabitState(date: date) ?? (false, .none)
                         if result {
-                            print(HabitTrackModel.shared.temporaryFuncGetDict())
-                            // TODO merge DayState & HabitState
-                            switch newState {
-                            case .none: dayView.dayState = .none
-                            case .done: dayView.dayState = .done
-                            case .notDone: dayView.dayState = .notDone
-                            }
-                            //
+                            dayView.habitState = newState
                         }
                     }
-//                    switch dayView.dayState {
-//                    case .inactive: break
-//                    case .none: dayView.dayState = .done
-//                    case .done: dayView.dayState = .notDone
-//                    case .notDone: dayView.dayState = .none
-//                    }
                 })
                 .disposed(by: self.disposeBag)
 
@@ -85,19 +72,12 @@ class WeekTableViewCell: UITableViewCell {
             if let dayView = viewWithTag(tag+1) as? DayView {
                 let calDay = calWeek.days[tag]
                 dayView.text = calDay.text
+                dayView.active = calDay.fromMonth
                 if let date = calDay.date, calDay.fromMonth {
-                    // TODO merge states
-                    let habitState = monthViewController.viewModel.dayState(date: date)
-                    switch habitState {
-                    case .none: dayView.dayState = .none
-                    case .done: dayView.dayState = .done
-                    case .notDone: dayView.dayState = .notDone
-                    }
-                    
+                    dayView.habitState = monthViewController.viewModel.getHabitState(date: date)
                 } else {
-                    dayView.dayState = .none
+                    dayView.habitState = .none
                 }
-//                dayView.dayState = calWeek.days[tag].fromMonth ? .none : self.monthViewController?.viewModel.dayState(date: calWeek.days[tag].date)
                 dayView.date = calWeek.days[tag].date
             }
         }
