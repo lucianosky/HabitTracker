@@ -8,6 +8,11 @@
 
 import UIKit
 
+// TODO - review
+import RxSwift
+import RxCocoa
+import RxGesture
+
 // TODO: move to view model
 enum DayState {
     case inactive
@@ -17,6 +22,9 @@ enum DayState {
 }
 
 class DayView: UIView {
+    
+    // TODO - review
+    private let disposeBag = DisposeBag()
     
     var text: String = "0" {
         didSet {
@@ -46,10 +54,21 @@ class DayView: UIView {
         
         activateConstraints("V:[self(40)]", views: viewsDict)
         activateConstraints("H:[self(40)]", views: viewsDict)
-        
-        // TODO: Rx
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
-        self.addGestureRecognizer(tapGesture)
+
+        // TODO: review
+        self.rx
+            .tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                switch self.dayState {
+                case .inactive: break
+                case .none: self.dayState = .done
+                case .done: self.dayState = .notDone
+                case .notDone: self.dayState = .none
+                }
+            })
+            .disposed(by: self.disposeBag)
     }
     
     override func draw(_ rect: CGRect) {
@@ -101,14 +120,4 @@ class DayView: UIView {
         attrStr.draw(in: rect)
     }
     
-    // TODO: move to view model
-    @objc func handleTap(sender: UITapGestureRecognizer) {
-        switch dayState {
-        case .inactive: break
-        case .none: dayState = .done
-        case .done: dayState = .notDone
-        case .notDone: dayState = .none
-        }
-    }
-
 }
