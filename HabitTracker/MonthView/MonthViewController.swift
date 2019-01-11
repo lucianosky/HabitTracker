@@ -11,7 +11,6 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-
 private struct Constants {
     static let tableCellId = "weekCell"
 }
@@ -38,7 +37,8 @@ class MonthViewController: UIViewController {
         super.viewDidLoad()
         createSubviews()
         createConstraints()
-        createBinds()
+        createDataBinds()
+        createGestureBinds()
         viewModel.serviceCall()
     }
     
@@ -73,13 +73,13 @@ class MonthViewController: UIViewController {
         yearLabel.equalConstraints([.left], to: monthLabel)
     }
 
-    private func createBinds() {
+    private func createDataBinds() {
         tableView.rx.base.delegate = self
 
         viewModel.dataSource
             .bind(to: tableView.rx.items){ (tableView, row, calWeek) in
                 if let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellId, for: IndexPath(row: row, section: 0)) as? WeekTableViewCell {
-                    return cell.configure(from: calWeek)
+                    return cell.configure(from: calWeek, monthViewController: self)
                 }
                 return UITableViewCell()
             }
@@ -94,7 +94,9 @@ class MonthViewController: UIViewController {
                 self?.yearLabel.text = dateFormatter.string(from: date)
             })
             .disposed(by: self.disposeBag)
-        
+    }
+    
+    private func createGestureBinds() {
         monthLabel.rx
             .tapGesture()
             .when(.recognized)
@@ -126,6 +128,10 @@ class MonthViewController: UIViewController {
                 self?.viewModel.browse(bySwipping: .month, toNext: gesture.direction == .left)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func dayTouched(date: Date) -> (Bool, HabitState) {
+        return viewModel.dayTouched(date: date)
     }
     
 }

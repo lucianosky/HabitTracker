@@ -9,9 +9,9 @@
 import UIKit
 
 // TODO - review
-import RxSwift
-import RxCocoa
-import RxGesture
+//import RxSwift
+//import RxCocoa
+//import RxGesture
 
 // TODO: move to view model
 enum DayState {
@@ -24,7 +24,7 @@ enum DayState {
 class DayView: UIView {
     
     // TODO - review
-    private let disposeBag = DisposeBag()
+//    private let disposeBag = DisposeBag()
     
     var text: String = "0" {
         didSet {
@@ -37,6 +37,8 @@ class DayView: UIView {
             self.setNeedsDisplay()
         }
     }
+    
+    var date: Date?
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("\(#file) \(#function) not implemented")
@@ -56,19 +58,19 @@ class DayView: UIView {
         activateConstraints("H:[self(40)]", views: viewsDict)
 
         // TODO: review
-        self.rx
-            .tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                switch self.dayState {
-                case .inactive: break
-                case .none: self.dayState = .done
-                case .done: self.dayState = .notDone
-                case .notDone: self.dayState = .none
-                }
-            })
-            .disposed(by: self.disposeBag)
+//        self.rx
+//            .tapGesture()
+//            .when(.recognized)
+//            .subscribe(onNext: { [weak self] _ in
+//                guard let self = self else { return }
+//                switch self.dayState {
+//                case .inactive: break
+//                case .none: self.dayState = .done
+//                case .done: self.dayState = .notDone
+//                case .notDone: self.dayState = .none
+//                }
+//            })
+//            .disposed(by: self.disposeBag)
     }
     
     override func draw(_ rect: CGRect) {

@@ -73,7 +73,7 @@ struct CalMonth {
         for _ in 0...6 {
             let day = Calendar.current.dateComponents([.day], from: date).day ?? 0
             let fromMonth = date >= firstMonthDate && date <= lastMonthDate
-            let calDay = CalDay(text: String(day), fromMonth: fromMonth)
+            let calDay = CalDay(text: String(day), fromMonth: fromMonth, date: fromMonth ? date : nil)
             calDays.append(calDay)
             date = Calendar.current.date(byAdding: DateComponents(day: 1), to: date)!
         }
@@ -88,7 +88,7 @@ struct CalMonth {
         for i in 1...7 {
             var j = i + delta
             j = j <= 7 ? j : j - 7
-            let calHeader = CalDay(text: shortSymbols[j-1], fromMonth: false)
+            let calHeader = CalDay(text: shortSymbols[j-1], fromMonth: false, date: nil)
             result.append(calHeader)
         }
         return result
@@ -114,4 +114,5 @@ struct CalWeek {
 struct CalDay {
     let text: String
     let fromMonth: Bool
+    let date: Date?
 }
