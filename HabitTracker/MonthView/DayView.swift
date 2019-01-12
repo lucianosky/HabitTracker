@@ -76,6 +76,15 @@ class DayView: UIView {
         path.lineWidth = 2
         path.stroke()
         path.fill()
+        
+        let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+        fadeAnimation.fromValue = 0.0
+        fadeAnimation.toValue = 1.0
+        fadeAnimation.duration = 0.8
+        fadeAnimation.repeatCount = 1
+        
+        layer.opacity = 1.0
+        layer.add(fadeAnimation, forKey: "FadeAnimation")
     }
     
     private func drawText() {
