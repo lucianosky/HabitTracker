@@ -8,10 +8,19 @@
 
 import Foundation
 
+// TODO
+import CoreData
+import UIKit
+
 enum HabitState {
     case none
     case done
     case notDone
+}
+
+private struct Constants {
+    static let entityName = "HabitLog"
+    static let datePredicate = "date = %@"
 }
 
 class HabitTrackModel {
@@ -24,21 +33,30 @@ class HabitTrackModel {
     }
 
     func changeHabitState(date: Date) -> HabitState {
-        let habitState = habitsDict[date]
-        if habitState == nil {
-            habitsDict[date] = .done
+        let currentState = habitsDict[date] ?? .none
+        let newState = switchState(currentState)
+        habitsDict[date] = newState == .none ? nil : newState
+        print(habitsDict)
+
+        // TODO
+        if newState == .none {
+            delete(date: date)
         } else {
-            switch habitState! {
-            case .none: habitsDict[date] = .done // TODO - LOG @ firebase, should not happen
-            case .done: habitsDict[date] = .notDone
-            case .notDone: habitsDict[date] = nil
-            }
+            udpate(date: date, habitState: newState)
         }
-        return habitsDict[date] ?? .none
-        // return
+        
         // TODO: test for service return
-        // TODO ---> REVIEW
-        // return (true, habitsDict[date] ?? .none)
+        return newState
+    }
+    
+    private func switchState(_ currentState: HabitState) -> HabitState {
+        let newState: HabitState
+        switch currentState {
+        case .none: newState = .done
+        case .done: newState = .notDone
+        case .notDone: newState = .none
+        }
+        return newState
     }
     
     func getHabitState(date: Date) -> HabitState {
@@ -48,9 +66,61 @@ class HabitTrackModel {
         return habitState
     }
     
-    // TODO
-    func temporaryFuncGetDict() -> [Date: HabitState] {
-        return habitsDict
+}
+
+// MARK: - CoreData
+
+extension HabitTrackModel {
+    
+    func udpate(date: Date, habitState: HabitState) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
+        let predicate = NSPredicate(format: Constants.datePredicate, date as CVarArg)
+        let done = habitState == .done
+        fetchRequest.predicate = predicate
+        do {
+            let records = try context.fetch(fetchRequest)
+            if records.count == 1,  let habitLog = records[0] as? HabitLog {
+                // update
+                habitLog.setValue(done, forKeyPath: "done")
+                try context.save()
+            } else if records.count == 0 {
+                // insert
+                let entity = NSEntityDescription.entity(forEntityName: Constants.entityName, in: context)!
+                let habitLog = NSManagedObject(entity: entity, insertInto: context)
+                habitLog.setValue(date, forKeyPath: "date")
+                habitLog.setValue(done, forKeyPath: "done")
+                try context.save()
+            } else {
+                print("error in udpate")
+            }
+        } catch let error as NSError {
+            print("Could not update. \(error), \(error.userInfo)")
+        }
+    }
+
+    func delete(date: Date) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
+        let predicate = NSPredicate(format: Constants.datePredicate, date as CVarArg)
+        fetchRequest.predicate = predicate
+        do {
+            let records = try context.fetch(fetchRequest)
+            if records.count == 1, let habitLog = records[0] as? HabitLog {
+                context.delete(habitLog)
+                try context.save()
+            } else {
+                print("error in delete")
+            }
+        } catch let error as NSError {
+            print("Could not delete. \(error), \(error.userInfo)")
+        }
     }
     
 }

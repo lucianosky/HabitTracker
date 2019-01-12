@@ -118,14 +118,6 @@ class MonthViewController: UIViewController {
             })
             .disposed(by: self.disposeBag)
 
-//        yearLabel.rx
-//            .tapGesture()
-//            .when(.recognized)
-//            .subscribe(onNext: { [weak self] _ in
-//                self?.viewModel.browseToday()
-//            })
-//            .disposed(by: self.disposeBag)
-        
         yearLabel.rx
             .swipeGesture([.up, .down])
             .when(.recognized)
