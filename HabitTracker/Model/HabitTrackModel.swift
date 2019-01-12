@@ -31,7 +31,8 @@ class HabitTrackModel {
     private var habitsDict = [Date: HabitState]()
     
     private init() {
-        fetchAll()
+        // TODO: testar status
+        _ = fetchAll()
     }
 
     func changeHabitState(date: Date) -> HabitState {
@@ -40,11 +41,11 @@ class HabitTrackModel {
         habitsDict[date] = newState == .none ? nil : newState
         print(habitsDict)
 
-        // TODO
+        // TODO: test for Core Data status
         if newState == .none {
-            delete(date: date)
+            _ = delete(date: date)
         } else {
-            udpate(date: date, habitState: newState)
+            _ = udpate(date: date, habitState: newState)
         }
         
         // TODO: test for service return
@@ -74,9 +75,9 @@ class HabitTrackModel {
 
 extension HabitTrackModel {
     
-    func udpate(date: Date, habitState: HabitState) {
+    func udpate(date: Date, habitState: HabitState) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
+            return false
         }
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
@@ -98,15 +99,18 @@ extension HabitTrackModel {
                 try context.save()
             } else {
                 print("error in udpate")
+                return false
             }
         } catch let error as NSError {
             print("Could not update. \(error), \(error.userInfo)")
+            return false
         }
+        return true
     }
 
-    func delete(date: Date) {
+    func delete(date: Date) -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
+            return false
         }
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
@@ -119,16 +123,20 @@ extension HabitTrackModel {
                 try context.save()
             } else {
                 print("error in delete")
+                return false
             }
         } catch let error as NSError {
             print("Could not delete. \(error), \(error.userInfo)")
+            return false
         }
+        return true
     }
     
-    func fetchAll() {
+    func fetchAll() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
+            return false
         }
+        var result = true
         let context = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Constants.entityName)
         do {
@@ -138,15 +146,19 @@ extension HabitTrackModel {
                     if let date = habitLog.date {
                         habitsDict[date] = habitLog.done ? HabitState.done : HabitState.notDone
                     } else {
+                        result = false
                         print("error in fetchAll")
                     }
                 }
             } else {
+                result = false
                 print("error in fetchAll")
             }
         } catch let error as NSError {
+            result = false
             print("Could not list. \(error), \(error.userInfo)")
         }
+        return result
     }
     
 }
