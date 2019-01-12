@@ -21,6 +21,7 @@ enum HabitState {
 private struct Constants {
     static let entityName = "HabitLog"
     static let datePredicate = "date = %@"
+    //static let periodPredicate = "(date >= %@) AND (date <= %@)"
 }
 
 class HabitTrackModel {
@@ -30,6 +31,7 @@ class HabitTrackModel {
     private var habitsDict = [Date: HabitState]()
     
     private init() {
+        fetchAll()
     }
 
     func changeHabitState(date: Date) -> HabitState {
@@ -120,6 +122,30 @@ extension HabitTrackModel {
             }
         } catch let error as NSError {
             print("Could not delete. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func fetchAll() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Constants.entityName)
+        do {
+            if let habitLogs = try context.fetch(fetchRequest) as? [HabitLog] {
+                habitsDict = [:]
+                for habitLog in habitLogs {
+                    if let date = habitLog.date {
+                        habitsDict[date] = habitLog.done ? HabitState.done : HabitState.notDone
+                    } else {
+                        print("error in fetchAll")
+                    }
+                }
+            } else {
+                print("error in fetchAll")
+            }
+        } catch let error as NSError {
+            print("Could not list. \(error), \(error.userInfo)")
         }
     }
     
