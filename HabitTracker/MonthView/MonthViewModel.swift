@@ -16,6 +16,7 @@ class MonthViewModel {
 
     let dataSource: PublishSubject<[CalWeek]> = PublishSubject()
     let currentDate: PublishSubject<Date> = PublishSubject()
+    let changedState: PublishSubject<(Date, HabitState)> = PublishSubject()
 
     init() {
         calMonth = CalMonth(date: Date())
@@ -42,8 +43,10 @@ class MonthViewModel {
         currentDate.onNext(calMonth.firstMonthDate)
     }
     
-    func setHabitState(date: Date) -> (Bool, HabitState) {
-        return HabitTrackModel.shared.setHabitState(date: date)
+    func changeHabitState(date: Date) {
+        // TODO: async return from service
+        let habitState = HabitTrackModel.shared.changeHabitState(date: date)
+        changedState.onNext((date, habitState))
     }
     
     func getHabitState(date: Date) -> HabitState {

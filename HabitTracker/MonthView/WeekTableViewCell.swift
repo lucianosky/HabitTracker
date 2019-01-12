@@ -34,13 +34,10 @@ class WeekTableViewCell: UITableViewCell {
             dayView.rx
                 .tapGesture()
                 .when(.recognized)
-                .subscribe(onNext: { _ in
+                .subscribe(onNext: { [weak self] _ in
                     // TODO log if null
                     if let date = dayView.date {
-                        let (result, newState) = self.monthViewController?.setHabitState(date: date) ?? (false, .none)
-                        if result {
-                            dayView.habitState = newState
-                        }
+                        self?.monthViewController?.changeHabitState(date: date)
                     }
                 })
                 .disposed(by: self.disposeBag)
@@ -59,8 +56,7 @@ class WeekTableViewCell: UITableViewCell {
         contentView.activateConstraints("H:|[stack]|", views: viewsDict)
     }
 
-// TODO review
-    
+//     TODO: review
 //    override func prepareForReuse() {
 //        super.prepareForReuse()
 //        disposeBag = DisposeBag()
@@ -82,6 +78,16 @@ class WeekTableViewCell: UITableViewCell {
             }
         }
         return self
+    }
+    
+    func changeState(date: Date, habitState: HabitState) -> Bool {
+        for dayView in dayViews {
+            if dayView.active, let dayDate = dayView.date, dayDate == date {
+                dayView.habitState = habitState
+                return true
+            }
+        }
+        return false
     }
     
 }

@@ -79,37 +79,6 @@ class MonthViewController: UIViewController {
         viewModel.dataSource
             .bind(to: tableView.rx.items){ [weak self] (tableView, row, calWeek) in
                 if let self = self, let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellId, for: IndexPath(row: row, section: 0)) as? WeekTableViewCell {
-                    
-//                    for tag in 0...6 {
-//                        if let dayView = cell.viewWithTag(tag+1) as? DayView {
-//
-//                            let calDay = calWeek.days[tag]
-//                            dayView.text = calDay.text
-//                            dayView.active = calDay.fromMonth
-//                            if let date = calDay.date, calDay.fromMonth {
-//                                dayView.habitState = self.viewModel.getHabitState(date: date)
-//                            } else {
-//                                dayView.habitState = .none
-//                            }
-//                            dayView.date = calWeek.days[tag].date
-//
-//                            dayView.rx
-//                                .tapGesture()
-//                                .when(.recognized)
-//                                .subscribe(onNext: { _ in
-//                                    // TODO log if null
-//                                    if let date = dayView.date {
-//                                        let (result, newState) = self.setHabitState(date: date)
-//                                        if result {
-//                                            dayView.habitState = newState
-//                                        }
-//                                    }
-//                                })
-//                                .disposed(by: self.disposeBag)
-//                        }
-//                    }
-//                    return cell
-                    
                     return cell.configure(from: calWeek, monthViewController: self)
                 }
                 return UITableViewCell()
@@ -124,7 +93,19 @@ class MonthViewController: UIViewController {
                 dateFormatter.dateFormat = "YYYY"
                 self?.yearLabel.text = dateFormatter.string(from: date)
             })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
+        
+        viewModel.changedState
+            .subscribe(onNext: { [weak self] (date, habitState) in
+                for cell in self?.tableView.visibleCells ?? [] {
+                    if let weekTableViewCell = cell as? WeekTableViewCell {
+                        if weekTableViewCell.changeState(date: date, habitState: habitState) {
+                            break
+                        }
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func createGestureBinds() {
@@ -161,8 +142,8 @@ class MonthViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    func setHabitState(date: Date) -> (Bool, HabitState) {
-        return viewModel.setHabitState(date: date)
+    func changeHabitState(date: Date) {
+        viewModel.changeHabitState(date: date)
     }
     
 }

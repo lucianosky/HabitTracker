@@ -23,7 +23,7 @@ class HabitTrackModel {
     private init() {
     }
 
-    func setHabitState(date: Date) -> (Bool, HabitState) {
+    func changeHabitState(date: Date) -> HabitState {
         let habitState = habitsDict[date]
         if habitState == nil {
             habitsDict[date] = .done
@@ -34,9 +34,11 @@ class HabitTrackModel {
             case .notDone: habitsDict[date] = nil
             }
         }
+        return habitsDict[date] ?? .none
+        // return
         // TODO: test for service return
         // TODO ---> REVIEW
-        return (true, habitsDict[date] ?? .none)
+        // return (true, habitsDict[date] ?? .none)
     }
     
     func getHabitState(date: Date) -> HabitState {
