@@ -77,8 +77,39 @@ class MonthViewController: UIViewController {
         tableView.rx.base.delegate = self
 
         viewModel.dataSource
-            .bind(to: tableView.rx.items){ (tableView, row, calWeek) in
-                if let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellId, for: IndexPath(row: row, section: 0)) as? WeekTableViewCell {
+            .bind(to: tableView.rx.items){ [weak self] (tableView, row, calWeek) in
+                if let self = self, let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellId, for: IndexPath(row: row, section: 0)) as? WeekTableViewCell {
+                    
+//                    for tag in 0...6 {
+//                        if let dayView = cell.viewWithTag(tag+1) as? DayView {
+//
+//                            let calDay = calWeek.days[tag]
+//                            dayView.text = calDay.text
+//                            dayView.active = calDay.fromMonth
+//                            if let date = calDay.date, calDay.fromMonth {
+//                                dayView.habitState = self.viewModel.getHabitState(date: date)
+//                            } else {
+//                                dayView.habitState = .none
+//                            }
+//                            dayView.date = calWeek.days[tag].date
+//
+//                            dayView.rx
+//                                .tapGesture()
+//                                .when(.recognized)
+//                                .subscribe(onNext: { _ in
+//                                    // TODO log if null
+//                                    if let date = dayView.date {
+//                                        let (result, newState) = self.setHabitState(date: date)
+//                                        if result {
+//                                            dayView.habitState = newState
+//                                        }
+//                                    }
+//                                })
+//                                .disposed(by: self.disposeBag)
+//                        }
+//                    }
+//                    return cell
+                    
                     return cell.configure(from: calWeek, monthViewController: self)
                 }
                 return UITableViewCell()
