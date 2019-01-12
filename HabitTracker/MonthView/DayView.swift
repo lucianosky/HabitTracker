@@ -10,6 +10,8 @@ import UIKit
 
 class DayView: UIView {
     
+    private let diameter = 42
+    
     var text: String = "0" {
         didSet {
             self.setNeedsDisplay()
@@ -44,8 +46,8 @@ class DayView: UIView {
         backgroundColor = .background
         translatesAutoresizingMaskIntoConstraints = false
         
-        activateConstraints("V:[self(40)]", views: viewsDict)
-        activateConstraints("H:[self(40)]", views: viewsDict)
+        activateConstraints("V:[self(\(diameter))]", views: viewsDict)
+        activateConstraints("H:[self(\(diameter))]", views: viewsDict)
     }
     
     override func draw(_ rect: CGRect) {
@@ -61,11 +63,11 @@ class DayView: UIView {
             switch habitState {
             case .none: break
             case .done:
-                UIColor.greenG.setStroke()
-                UIColor.greenLighter.setFill()
+                UIColor.doneStroke.setStroke()
+                UIColor.doneFill.setFill()
             case .notDone:
-                UIColor.yellowY.setStroke()
-                UIColor.yellowLighter.setFill()
+                UIColor.notDoneStroke.setStroke()
+                UIColor.notDoneFill.setFill()
             }
         }
 
@@ -80,9 +82,9 @@ class DayView: UIView {
         let color: UIColor
         if active {
             switch habitState {
-            case .none: color = .darkText
-            case .done: color = .greenText
-            case .notDone: color = .yellowText
+            case .none: color = .activeText
+            case .done: color = .doneText
+            case .notDone: color = .notDoneText
             }
         } else {
             color = .inactiveText
@@ -92,7 +94,7 @@ class DayView: UIView {
         paragraphStyle.alignment = .center
         let attributes: [NSAttributedString.Key : Any] = [
             .paragraphStyle: paragraphStyle,
-            .font: UIFont.systemFont(ofSize: 12.0),
+            .font: active ? SFont.dayViewActive.font : SFont.dayViewInactive.font,
             .foregroundColor: color
         ]
         let attrStr = NSAttributedString(string: text, attributes: attributes)

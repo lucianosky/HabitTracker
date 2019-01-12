@@ -11,9 +11,9 @@ import UIKit
 
 enum SFont: String {
     
-    case helveticaLight18 = "hl18"
-    case helveticaBold24 = "hb24"
-    case helveticaBold20 = "hb20"
+    case dayViewActive = "hb16"
+    case dayViewInactive = "hr16"
+    case monthName = "hb24"
     
     var font: UIFont {
         

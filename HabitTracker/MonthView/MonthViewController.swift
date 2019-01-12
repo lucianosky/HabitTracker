@@ -13,6 +13,7 @@ import RxGesture
 
 private struct Constants {
     static let tableCellId = "weekCell"
+    static let rowHeight: CGFloat = 55
 }
 
 class MonthViewController: UIViewController {
@@ -20,8 +21,8 @@ class MonthViewController: UIViewController {
     var viewModel: MonthViewModel
     private let disposeBag = DisposeBag()
 
-    let monthLabel = UILabel(.helveticaBold24, .darkText, "")
-    let yearLabel = UILabel(.helveticaBold20, .darkText, "")
+    let monthLabel = UILabel(.monthName, .activeText, "")
+    let yearLabel = UILabel(.monthName, .activeText, "")
     let tableView = UITableView()
     
     init(viewModel: MonthViewModel? = nil) {
@@ -44,7 +45,7 @@ class MonthViewController: UIViewController {
     
     private func createSubviews() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.rowHeight = 50
+        //tableView.rowHeight = 50
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: Constants.tableCellId)
@@ -67,10 +68,10 @@ class MonthViewController: UIViewController {
             // http://germanylandofinnovation.com/questions/29066/swift-safe-area-layout-guide-und-visual-format-language
         ]
         
-        activateConstraints("V:[topGuide]-40-[monthLabel]-5-[yearLabel]-20-[tableView]-|", views: viewsDict)
+        activateConstraints("V:[topGuide]-40-[monthLabel]-20-[tableView]-|", views: viewsDict)
         activateConstraints("H:|-[tableView]-|", views: viewsDict)
-        activateConstraints("H:|-30-[monthLabel]", views: viewsDict)
-        yearLabel.equalConstraints([.left], to: monthLabel)
+        activateConstraints("H:|-30-[monthLabel]->=10-[yearLabel]-30-|", views: viewsDict)
+        yearLabel.equalConstraints([.top], to: monthLabel)
     }
 
     private func createDataBinds() {
@@ -117,19 +118,19 @@ class MonthViewController: UIViewController {
             })
             .disposed(by: self.disposeBag)
 
-        yearLabel.rx
-            .tapGesture()
-            .when(.recognized)
-            .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.browseToday()
-            })
-            .disposed(by: self.disposeBag)
+//        yearLabel.rx
+//            .tapGesture()
+//            .when(.recognized)
+//            .subscribe(onNext: { [weak self] _ in
+//                self?.viewModel.browseToday()
+//            })
+//            .disposed(by: self.disposeBag)
         
         yearLabel.rx
-            .swipeGesture([.left, .right])
+            .swipeGesture([.up, .down])
             .when(.recognized)
             .subscribe(onNext: { [weak self] gesture in
-                self?.viewModel.browse(bySwipping: .year, toNext: gesture.direction == .left)
+                self?.viewModel.browse(bySwipping: .year, toNext: gesture.direction == .up)
             })
             .disposed(by: self.disposeBag)
         
@@ -151,7 +152,7 @@ class MonthViewController: UIViewController {
 extension MonthViewController : UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return Constants.rowHeight
     }
     
 }

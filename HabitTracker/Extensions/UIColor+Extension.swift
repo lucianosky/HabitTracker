@@ -22,20 +22,16 @@ extension UIColor {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
     
-    static let background = UIColor(netHex: 0xF4F6F8) // 0xF9FAFB)
+    static let background = UIColor(netHex: 0xDFE4E8)
     static let inactiveText = UIColor(netHex: 0x919EAB)
-    static let darkText = UIColor(netHex: 0x212B35)
+    static let activeText = UIColor(netHex: 0x212B35)
     
-    static let yellowLighter = UIColor(netHex: 0xFCF1CD)
-    static let yellowY = UIColor(netHex: 0xEEC200)
-    static let yellowDark = UIColor(netHex: 0x9C6F19)
-    static let yellowText = UIColor(netHex: 0x595130)
-
-    static let greenLighter = UIColor(netHex: 0xE3F1DF)
-    static let greenG = UIColor(netHex: 0xBBE5B3)
-    static let greenDark = UIColor(netHex: 0x108043)
-    static let greenText = UIColor(netHex: 0x414F3E)
-
-
+    static let doneStroke = UIColor(netHex: 0x108043)
+    static let doneFill = UIColor(netHex: 0x50B83C)
+    static let doneText = UIColor(netHex: 0xE3F1DF)
+    
+    static let notDoneStroke = UIColor(netHex: 0xB70711)
+    static let notDoneFill = UIColor(netHex: 0xED6447)
+    static let notDoneText = UIColor(netHex: 0xFBEAE5)
 }
 
