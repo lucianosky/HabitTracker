@@ -22,16 +22,24 @@ extension UIColor {
         self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
     }
     
-    static let background = UIColor(netHex: 0xDFE4E8)
+    static let background = UIColor(netHex: 0xF4F6F8) // 0xDFE4E8)
     static let inactiveText = UIColor(netHex: 0x919EAB)
     static let activeText = UIColor(netHex: 0x212B35)
     
-    static let doneStroke = UIColor(netHex: 0x108043)
-    static let doneFill = UIColor(netHex: 0xBBE5B3) // 0x50B83C)
-    static let doneText = UIColor(netHex: 0x414F3E) // 0xE3F1DF)
-    
-    static let notDoneStroke = UIColor(netHex: 0xB70711)
-    static let notDoneFill = UIColor(netHex: 0xFEAF9A) // 0xED6447)
-    static let notDoneText = UIColor(netHex: 0x583C35) // 0xFBEAE5)
+    static let doneStroke = UIColor(netHex: 0x33b679)
+    static let doneFill = UIColor(netHex: 0xc2e9d7)
+    static let doneText = activeText // UIColor(netHex: 0x98b6a9)
+
+//    static let doneStroke = UIColor(netHex: 0x108043)
+//    static let doneFill = UIColor(netHex: 0xBBE5B3) // 0x50B83C)
+//    static let doneText = UIColor(netHex: 0x414F3E) // 0xE3F1DF)
+
+    static let notDoneStroke = UIColor(netHex: 0xd50000)
+    static let notDoneFill = UIColor(netHex: 0xf2b3b3)
+    static let notDoneText = activeText // UIColor(netHex: 0xa27c7d)
+
+//    static let notDoneStroke = UIColor(netHex: 0xB70711)
+//    static let notDoneFill = UIColor(netHex: 0xFEAF9A) // 0xED6447)
+//    static let notDoneText = UIColor(netHex: 0x583C35) // 0xFBEAE5)
 }
 
