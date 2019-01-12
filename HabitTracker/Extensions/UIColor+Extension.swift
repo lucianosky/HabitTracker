@@ -27,11 +27,11 @@ extension UIColor {
     static let activeText = UIColor(netHex: 0x212B35)
     
     static let doneStroke = UIColor(netHex: 0x108043)
-    static let doneFill = UIColor(netHex: 0x50B83C)
-    static let doneText = UIColor(netHex: 0xE3F1DF)
+    static let doneFill = UIColor(netHex: 0xBBE5B3) // 0x50B83C)
+    static let doneText = UIColor(netHex: 0x414F3E) // 0xE3F1DF)
     
     static let notDoneStroke = UIColor(netHex: 0xB70711)
-    static let notDoneFill = UIColor(netHex: 0xED6447)
-    static let notDoneText = UIColor(netHex: 0xFBEAE5)
+    static let notDoneFill = UIColor(netHex: 0xFEAF9A) // 0xED6447)
+    static let notDoneText = UIColor(netHex: 0x583C35) // 0xFBEAE5)
 }
 

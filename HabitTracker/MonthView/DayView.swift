@@ -71,9 +71,13 @@ class DayView: UIView {
             }
         }
 
-        let rect = CGRect(x: 1, y: 1, width: bounds.size.width-2, height: bounds.height-2)
+        let lineWidth: CGFloat = 4.0
+        let halfLineWidth = lineWidth / 2.0
+        let rect = CGRect(x: halfLineWidth, y: halfLineWidth,
+                          width: bounds.size.width - lineWidth,
+                          height: bounds.height - lineWidth)
         let path = UIBezierPath(ovalIn: rect)
-        path.lineWidth = 2
+        path.lineWidth = lineWidth
         path.stroke()
         path.fill()
         
