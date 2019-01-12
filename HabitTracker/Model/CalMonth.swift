@@ -68,7 +68,7 @@ struct CalMonth {
     
     private func getWeekDays(_ week: Int) -> [CalDay] {
         // TODO: optionals
-        var date = Calendar.current.date(byAdding: DateComponents(day: week * 7), to: firstMonthDate)!
+        var date = Calendar.current.date(byAdding: DateComponents(day: week * 7), to: firstCalDate)!
         var calDays:[CalDay] = []
         for _ in 0...6 {
             let day = Calendar.current.dateComponents([.day], from: date).day ?? 0
