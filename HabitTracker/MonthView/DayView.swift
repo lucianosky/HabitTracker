@@ -71,6 +71,10 @@ class DayView: UIView {
                 UIColor.notDoneStroke.setStroke()
                 UIColor.notDoneFill.setFill()
             }
+        // XXX
+        } else if isHeader {
+            UIColor.backgroundXXX.setStroke()
+            UIColor.backgroundXXX.setFill()
         }
 
         let lineWidth: CGFloat = 4.0
@@ -102,14 +106,19 @@ class DayView: UIView {
             case .notDone: color = .notDoneText
             }
         } else {
-            color = .inactiveText
+            if isHeader {
+                color = .inactiveText
+            } else {
+                color = .notMonthText
+            }
         }
 
+        let font = isHeader ? SFont.dayViewActive.font : (active ? SFont.dayViewActive.font : SFont.dayViewInactive.font)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         let attributes: [NSAttributedString.Key : Any] = [
             .paragraphStyle: paragraphStyle,
-            .font: active ? SFont.dayViewActive.font : SFont.dayViewInactive.font,
+            .font: font,
             .foregroundColor: color
         ]
         let attrStr = NSAttributedString(string: text, attributes: attributes)

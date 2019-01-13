@@ -21,7 +21,7 @@ enum SFont: String {
         let size = CGFloat(sizeNum)
         
         var type: String = "invalid"
-        let name = String(rawValue[0..<1]) == "h" ? "Helvetica" : "invalid"
+        let name = String(rawValue[0..<1]) == "h" ? "AppleSDGothicNeo" : "invalid"
         
         switch String(rawValue[1..<2]) {
         case "b":

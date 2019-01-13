@@ -21,8 +21,8 @@ class MonthViewController: UIViewController {
     var viewModel: MonthViewModel
     private let disposeBag = DisposeBag()
 
-    let monthLabel = UILabel(.monthName, .activeText, "")
-    let yearLabel = UILabel(.monthName, .activeText, "")
+    let monthLabel = UILabel(.monthName, .monthNameText, "")
+    let yearLabel = UILabel(.monthName, .monthNameText, "")
     let tableView = UITableView()
     
     init(viewModel: MonthViewModel? = nil) {

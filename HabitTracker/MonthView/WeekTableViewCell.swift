@@ -67,6 +67,12 @@ class WeekTableViewCell: UITableViewCell {
 //    }
     
     func configure(from calWeek: CalWeek, monthViewController: MonthViewController) -> WeekTableViewCell {
+        
+        // XXX
+//        if calWeek.isHeader {
+//            backgroundColor = .backgroundXXX
+//        }
+        
         self.monthViewController = monthViewController
         for tag in 0...6 {
             if let dayView = viewWithTag(tag+1) as? DayView {
