@@ -36,8 +36,12 @@ class WeekTableViewCell: UITableViewCell {
                 .when(.recognized)
                 .subscribe(onNext: { [weak self] _ in
                     // TODO log if null
-                    if let date = dayView.date {
-                        self?.monthViewController?.changeHabitState(date: date)
+                    if dayView.isHeader {
+                        self?.monthViewController?.changeStartOfWeek(tag: dayView.tag)
+                    } else {
+                        if let date = dayView.date {
+                            self?.monthViewController?.changeHabitState(date: date)
+                        }
                     }
                 })
                 .disposed(by: self.disposeBag)
@@ -75,6 +79,7 @@ class WeekTableViewCell: UITableViewCell {
                     dayView.habitState = .none
                 }
                 dayView.date = calWeek.days[tag].date
+                dayView.isHeader = calWeek.isHeader
             }
         }
         return self

@@ -31,6 +31,8 @@ class DayView: UIView {
     }
     
     var date: Date?
+    
+    var isHeader = false
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("\(#file) \(#function) not implemented")

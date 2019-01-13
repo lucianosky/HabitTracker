@@ -139,6 +139,9 @@ class MonthViewController: UIViewController {
         viewModel.changeHabitState(date: date)
     }
     
+    func changeStartOfWeek(tag: Int) {
+        viewModel.changeStartOfWeek(tag: tag)
+    }
 }
 
 extension MonthViewController : UITableViewDelegate {

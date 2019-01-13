@@ -12,7 +12,6 @@ import RxSwift
 class MonthViewModel {
     
     private var calMonth: CalMonth
-    private let defaultStartOfWeek = 2
 
     let dataSource: PublishSubject<[CalWeek]> = PublishSubject()
     let currentDate: PublishSubject<Date> = PublishSubject()
@@ -53,5 +52,13 @@ class MonthViewModel {
         return HabitTrackModel.shared.getHabitState(date: date)
     }
     
+    func changeStartOfWeek(tag: Int) {
+        var newStartOfWeek = calMonth.startOfWeek + tag - 1
+        if newStartOfWeek > 7 {
+            newStartOfWeek -= 7
+        }
+        calMonth = CalMonth(date: calMonth.firstMonthDate, startOfWeek: newStartOfWeek)
+        emit()
+    }
     
 }
