@@ -56,6 +56,11 @@ class MonthViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(yearLabel)
         view.addSubview(monthLabel)
+        
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     private func createConstraints() {
