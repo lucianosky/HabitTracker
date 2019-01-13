@@ -39,7 +39,6 @@ class HabitTrackModel {
         let currentState = habitsDict[date] ?? .none
         let newState = switchState(currentState)
         habitsDict[date] = newState == .none ? nil : newState
-        print(habitsDict)
 
         // TODO: test for Core Data status
         if newState == .none {

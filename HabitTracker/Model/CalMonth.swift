@@ -43,9 +43,6 @@ struct CalMonth {
         self.startOfWeek = startOfWeek
         
         firstMonthDate = Calendar.current.date(from: components)!
-        
-        print("firstMonthDate = \(firstMonthDate)")
-        
         lastMonthDate = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstMonthDate)!
 
         let firstWeekday = Calendar.current.component(.weekday, from: firstMonthDate)
