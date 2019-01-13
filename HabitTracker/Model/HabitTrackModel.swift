@@ -7,10 +7,7 @@
 //
 
 import Foundation
-
-// TODO
 import CoreData
-import UIKit
 
 enum HabitState {
     case none
@@ -21,7 +18,6 @@ enum HabitState {
 private struct Constants {
     static let entityName = "HabitLog"
     static let datePredicate = "date = %@"
-    //static let periodPredicate = "(date >= %@) AND (date <= %@)"
 }
 
 class HabitTrackModel {
@@ -75,10 +71,7 @@ class HabitTrackModel {
 extension HabitTrackModel {
     
     func udpate(date: Date, habitState: HabitState) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return false
-        }
-        let context = appDelegate.persistentContainer.viewContext
+        let context = CoreDataHelper.shared.persistentContainer.viewContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
         let predicate = NSPredicate(format: Constants.datePredicate, date as CVarArg)
         let done = habitState == .done
@@ -108,10 +101,7 @@ extension HabitTrackModel {
     }
 
     func delete(date: Date) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return false
-        }
-        let context = appDelegate.persistentContainer.viewContext
+        let context = CoreDataHelper.shared.persistentContainer.viewContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
         let predicate = NSPredicate(format: Constants.datePredicate, date as CVarArg)
         fetchRequest.predicate = predicate
@@ -132,11 +122,8 @@ extension HabitTrackModel {
     }
     
     func fetchAll() -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return false
-        }
         var result = true
-        let context = appDelegate.persistentContainer.viewContext
+        let context = CoreDataHelper.shared.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Constants.entityName)
         do {
             if let habitLogs = try context.fetch(fetchRequest) as? [HabitLog] {

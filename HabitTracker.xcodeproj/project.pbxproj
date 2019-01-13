@@ -21,6 +21,7 @@
 		6E8410E721E8085D0076536B /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8410E621E8085D0076536B /* NSLayoutConstraint+Extension.swift */; };
 		6E8410E921E922FC0076536B /* HabitTrackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8410E821E922FC0076536B /* HabitTrackModel.swift */; };
 		6E84112921EA7A340076536B /* HabitTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6E84112721EA7A340076536B /* HabitTracker.xcdatamodeld */; };
+		6E84112C21EAC02D0076536B /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E84112B21EAC02D0076536B /* CoreDataHelper.swift */; };
 		6E97279321E008A400BDC68A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E97279221E008A400BDC68A /* AppDelegate.swift */; };
 		6E97279521E008A400BDC68A /* MonthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E97279421E008A400BDC68A /* MonthViewController.swift */; };
 		6E97279A21E008A800BDC68A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E97279921E008A800BDC68A /* Assets.xcassets */; };
@@ -64,6 +65,7 @@
 		6E8410E621E8085D0076536B /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
 		6E8410E821E922FC0076536B /* HabitTrackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackModel.swift; sourceTree = "<group>"; };
 		6E84112821EA7A340076536B /* HabitTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HabitTracker.xcdatamodel; sourceTree = "<group>"; };
+		6E84112B21EAC02D0076536B /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		6E97278F21E008A400BDC68A /* HabitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E97279221E008A400BDC68A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E97279421E008A400BDC68A /* MonthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		6E84112A21EAC0080076536B /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				6E84112B21EAC02D0076536B /* CoreDataHelper.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		6E97278621E008A300BDC68A = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +189,7 @@
 			children = (
 				6E8410DE21E7ABE40076536B /* MonthView */,
 				6E8410DF21E7AC0D0076536B /* Model */,
+				6E84112A21EAC0080076536B /* Helper */,
 				6E8410D321E68B560076536B /* Extensions */,
 				6E97279221E008A400BDC68A /* AppDelegate.swift */,
 				6E97279921E008A800BDC68A /* Assets.xcassets */,
@@ -406,6 +417,7 @@
 				6E97279521E008A400BDC68A /* MonthViewController.swift in Sources */,
 				6E28452F21E5511000C4CC1F /* DayView.swift in Sources */,
 				6E28452B21E3920E00C4CC1F /* WeekTableViewCell.swift in Sources */,
+				6E84112C21EAC02D0076536B /* CoreDataHelper.swift in Sources */,
 				6E8410E721E8085D0076536B /* NSLayoutConstraint+Extension.swift in Sources */,
 				6E8410D521E68BA00076536B /* UILabel+Extension.swift in Sources */,
 				6E97279321E008A400BDC68A /* AppDelegate.swift in Sources */,
