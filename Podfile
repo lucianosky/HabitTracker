@@ -7,4 +7,5 @@ target 'HabitTracker' do
   pod 'RxSwift', '~> 4.4'
   pod 'RxCocoa', '~> 4.4'
   pod 'RxGesture', '~> 2.1'
+  pod 'Alamofire', '~> 4.8'
 end

@@ -17,13 +17,23 @@ class MonthViewModel {
     let currentDate: PublishSubject<Date> = PublishSubject()
     let changedState: PublishSubject<(Date, HabitState)> = PublishSubject()
 
+    private let disposeBag = DisposeBag()
+
     init() {
         calMonth = CalMonth(date: Date())
+        createBinds()
         serviceCall()
+    }
+    
+    func createBinds() {
+        NetworkService.shared.publisher.subscribe(onNext: { (habitLog2) in
+            print(habitLog2)
+        }).disposed(by: self.disposeBag)
     }
     
     // TODO: implement service
     func serviceCall() {
+        NetworkService.shared.getHabitLog2()
         emit()
     }
     
