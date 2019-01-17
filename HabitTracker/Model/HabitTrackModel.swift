@@ -17,7 +17,7 @@ enum HabitState {
 
 private struct Constants {
     static let entityName = "HabitLog"
-    static let datePredicate = "date = %@"
+    static let datePredicate = "yyyymmdd = %@"
 }
 
 class HabitTrackModel {
@@ -31,16 +31,16 @@ class HabitTrackModel {
         _ = fetchAll()
     }
 
-    func changeHabitState(date: String) -> HabitState {
-        let currentState = habitsDict[date] ?? .none
+    func changeHabitState(yyyymmdd: String) -> HabitState {
+        let currentState = habitsDict[yyyymmdd] ?? .none
         let newState = switchState(currentState)
-        habitsDict[date] = newState == .none ? nil : newState
+        habitsDict[yyyymmdd] = newState == .none ? nil : newState
 
         // TODO: test for Core Data status
         if newState == .none {
-            _ = delete(date: date)
+            _ = delete(yyyymmdd: yyyymmdd)
         } else {
-            _ = udpate(date: date, habitState: newState)
+            _ = udpate(yyyymmdd: yyyymmdd, habitState: newState)
         }
         
         // TODO: test for service return
@@ -57,8 +57,8 @@ class HabitTrackModel {
         return newState
     }
     
-    func getHabitState(date: String) -> HabitState {
-        guard let habitState = habitsDict[date] else {
+    func getHabitState(yyyymmdd: String) -> HabitState {
+        guard let habitState = habitsDict[yyyymmdd] else {
             return .none
         }
         return habitState
@@ -70,10 +70,10 @@ class HabitTrackModel {
 
 extension HabitTrackModel {
     
-    func udpate(date: String, habitState: HabitState) -> Bool {
+    func udpate(yyyymmdd: String, habitState: HabitState) -> Bool {
         let context = CoreDataHelper.shared.persistentContainer.viewContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
-        let predicate = NSPredicate(format: Constants.datePredicate, date as CVarArg)
+        let predicate = NSPredicate(format: Constants.datePredicate, yyyymmdd as CVarArg)
         let done = habitState == .done
         fetchRequest.predicate = predicate
         do {
@@ -86,7 +86,7 @@ extension HabitTrackModel {
                 // insert
                 let entity = NSEntityDescription.entity(forEntityName: Constants.entityName, in: context)!
                 let habitLog = NSManagedObject(entity: entity, insertInto: context)
-                habitLog.setValue(date, forKeyPath: "date")
+                habitLog.setValue(yyyymmdd, forKeyPath: "yyyymmdd")
                 habitLog.setValue(done, forKeyPath: "done")
                 try context.save()
             } else {
@@ -100,10 +100,10 @@ extension HabitTrackModel {
         return true
     }
 
-    func delete(date: String) -> Bool {
+    func delete(yyyymmdd: String) -> Bool {
         let context = CoreDataHelper.shared.persistentContainer.viewContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
-        let predicate = NSPredicate(format: Constants.datePredicate, date as CVarArg)
+        let predicate = NSPredicate(format: Constants.datePredicate, yyyymmdd as CVarArg)
         fetchRequest.predicate = predicate
         do {
             let records = try context.fetch(fetchRequest)
@@ -129,8 +129,8 @@ extension HabitTrackModel {
             if let habitLogs = try context.fetch(fetchRequest) as? [HabitLog] {
                 habitsDict = [:]
                 for habitLog in habitLogs {
-                    if let date = habitLog.date {
-                        habitsDict[date] = habitLog.done ? HabitState.done : HabitState.notDone
+                    if let yyyymmdd = habitLog.yyyymmdd {
+                        habitsDict[yyyymmdd] = habitLog.done ? HabitState.done : HabitState.notDone
                     } else {
                         result = false
                         print("error in fetchAll")
