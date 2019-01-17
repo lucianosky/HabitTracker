@@ -18,7 +18,9 @@ class CalMonthSpec: QuickSpec {
         var calMonth: CalMonth!
         var firstCalDate: Date!
         var lastCalDate: Date!
-        
+        let firstMonthDate = Date.fromComponents(year: 2019, month: 1, day: 1)
+        let lastMonthDate = Date.fromComponents(year: 2019, month: 1, day: 31)
+
         describe("january") {
 
             context("starting default Sunday") {
@@ -92,6 +94,8 @@ class CalMonthSpec: QuickSpec {
             }
             
             afterEach {
+                expect(calMonth.firstMonthDate).to(equal(firstMonthDate))
+                expect(calMonth.lastMonthDate).to(equal(lastMonthDate))
                 expect(calMonth.firstCalDate).to(equal(firstCalDate))
                 expect(calMonth.lastCalDate).to(equal(lastCalDate))
             }
