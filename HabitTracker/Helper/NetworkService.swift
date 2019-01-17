@@ -10,22 +10,50 @@ import Foundation
 import Alamofire
 import RxSwift
 
+final class HabitLogDB: Codable {
+    var id: Int?
+    var date: String
+    var done: Bool
+    
+    init(date: String, done: Bool) {
+        self.date = date
+        self.done = done
+    }
+}
+
 class NetworkService {
     
     static let shared = NetworkService()
     
     private init() {}
     
-    let publisher: PublishSubject<HabitLog2> = PublishSubject()
+    let currentHabitLog: PublishSubject<HabitLogDB> = PublishSubject()
+    let currentHabitLogs: PublishSubject<[HabitLogDB]> = PublishSubject()
+
+    private let baseURL = "https://habittrackervapor.vapor.cloud/api/"
     
-    func getHabitLog2() {
-        Alamofire.request("https://habittrackervapor.vapor.cloud/api/habitlogs/1")
+    func getHabitLog(id: Int) {
+        Alamofire.request("\(baseURL)habitlogs/\(id)")
             .responseData { [weak self] response in
                 let decoder = JSONDecoder()
-                let habit: Result<HabitLog2> = decoder.decodeResponse(from: response)
+                let habit: Result<HabitLogDB> = decoder.decodeResponse(from: response)
                 switch habit {
-                case .success(let habitLog2):
-                    self?.publisher.onNext(habitLog2)
+                case .success(let habitLogDB):
+                    self?.currentHabitLog.onNext(habitLogDB)
+                case .failure(let error):
+                    print(error)
+                }
+        }
+    }
+    
+    func getHabitLogs() {
+        Alamofire.request("\(baseURL)habitlogs")
+            .responseData { [weak self] response in
+                let decoder = JSONDecoder()
+                let habit: Result<[HabitLogDB]> = decoder.decodeResponse(from: response)
+                switch habit {
+                case .success(let habitLogs):
+                    self?.currentHabitLogs.onNext(habitLogs)
                 case .failure(let error):
                     print(error)
                 }
@@ -62,13 +90,4 @@ extension JSONDecoder {
     }
 }
 
-final class HabitLog2: Codable {
-    var id: Int?
-    var date: String
-    var done: Bool
-    
-    init(date: String, done: Bool) {
-        self.date = date
-        self.done = done
-    }
-}
+

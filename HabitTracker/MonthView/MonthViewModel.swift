@@ -22,18 +22,20 @@ class MonthViewModel {
     init() {
         calMonth = CalMonth(date: Date())
         createBinds()
-        serviceCall()
     }
     
     func createBinds() {
-        NetworkService.shared.publisher.subscribe(onNext: { (habitLog2) in
-            print(habitLog2)
-        }).disposed(by: self.disposeBag)
+//        NetworkService.shared.currentHabitLog.subscribe(onNext: { (habitLogDB) in
+//            print(habitLogDB)
+//        }).disposed(by: self.disposeBag)
+//        NetworkService.shared.currentHabitLogs.subscribe(onNext: { (habitLogs) in
+//            print(habitLogs)
+//        }).disposed(by: self.disposeBag)
     }
     
-    // TODO: implement service
     func serviceCall() {
-        NetworkService.shared.getHabitLog2()
+//        NetworkService.shared.getHabitLog(id: 1)
+//        NetworkService.shared.getHabitLogs()
         emit()
     }
     
