@@ -16,7 +16,10 @@ As this moment the focus is to use several technologies from the Swift stack.
 - Alamofire access to HabitTrackerVapor
 
 ## Data persistance TO DO:
-Implement Alamofire 5 (still in Beta). Support offline sync between Core Data and HabitTrackVapor. At this moment the Alamofire calls are commented. I used Alamofire 4.8 with an extension that permits Codable conformance. At this moment there are two different classed that represent an HabitLog. One for Core Data and another for Alamofire.
+- Implement Alamofire 5 (still in Beta). I used Alamofire 4.8 with an extension that permits Codable conformance.
+- Support offline sync between Core Data and HabitTrackVapor.
+- At this moment the Alamofire calls are commented.
+- Refactor two different classed that represent a HabitLog. One for Core Data and another for Alamofire.
 
 ## Technical stack TO DO:
 - Save or export to a Google Calendar
