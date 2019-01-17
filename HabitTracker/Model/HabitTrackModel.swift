@@ -24,14 +24,14 @@ class HabitTrackModel {
     
     static let shared = HabitTrackModel()
     
-    private var habitsDict = [Date: HabitState]()
+    private var habitsDict = [String: HabitState]()
     
     private init() {
         // TODO: testar status
         _ = fetchAll()
     }
 
-    func changeHabitState(date: Date) -> HabitState {
+    func changeHabitState(date: String) -> HabitState {
         let currentState = habitsDict[date] ?? .none
         let newState = switchState(currentState)
         habitsDict[date] = newState == .none ? nil : newState
@@ -57,7 +57,7 @@ class HabitTrackModel {
         return newState
     }
     
-    func getHabitState(date: Date) -> HabitState {
+    func getHabitState(date: String) -> HabitState {
         guard let habitState = habitsDict[date] else {
             return .none
         }
@@ -70,7 +70,7 @@ class HabitTrackModel {
 
 extension HabitTrackModel {
     
-    func udpate(date: Date, habitState: HabitState) -> Bool {
+    func udpate(date: String, habitState: HabitState) -> Bool {
         let context = CoreDataHelper.shared.persistentContainer.viewContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
         let predicate = NSPredicate(format: Constants.datePredicate, date as CVarArg)
@@ -100,7 +100,7 @@ extension HabitTrackModel {
         return true
     }
 
-    func delete(date: Date) -> Bool {
+    func delete(date: String) -> Bool {
         let context = CoreDataHelper.shared.persistentContainer.viewContext
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: Constants.entityName)
         let predicate = NSPredicate(format: Constants.datePredicate, date as CVarArg)

@@ -54,12 +54,12 @@ class MonthViewModel {
     
     func changeHabitState(date: Date) {
         // TODO: async return from service
-        let habitState = HabitTrackModel.shared.changeHabitState(date: date)
+        let habitState = HabitTrackModel.shared.changeHabitState(date: date.dateString)
         changedState.onNext((date, habitState))
     }
     
     func getHabitState(date: Date) -> HabitState {
-        return HabitTrackModel.shared.getHabitState(date: date)
+        return HabitTrackModel.shared.getHabitState(date: date.dateString)
     }
     
     func changeStartOfWeek(tag: Int) {
