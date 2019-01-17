@@ -12,7 +12,7 @@ As this moment the focus is to use several technologies from the Swift stack.
 - View code
 - Core data
 - RxSwift
-- HabitTrackerVapor, a parallel to create an API
+- [HabitTrackerVapor](https://github.com/lucianosky/HabitTrackerVapor), a [Vapor](https://vapor.codes/) backend project to create an API
 - Alamofire access to HabitTrackerVapor
 - Unit Testing and BDD with Quick and Nimble
 

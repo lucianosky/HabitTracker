@@ -11,17 +11,18 @@ import Nimble
 
 @testable import HabitTracker
 
-class CalMonthSpec: QuickSpec {
+class CalMonthBrowseSpec: QuickSpec {
 
     override func spec() {
         
         var calMonth: CalMonth!
-        var firstCalDate: Date!
-        var lastCalDate: Date!
-        let firstMonthDate = Date.fromComponents(year: 2019, month: 1, day: 1)
-        let lastMonthDate = Date.fromComponents(year: 2019, month: 1, day: 31)
+        
+        describe("january 2019") {
 
-        describe("january") {
+            var firstCalDate: Date!
+            var lastCalDate: Date!
+            let firstMonthDate = Date.fromComponents(year: 2019, month: 1, day: 1)
+            let lastMonthDate = Date.fromComponents(year: 2019, month: 1, day: 31)
 
             context("starting default Sunday") {
                 it("should have 5 weeks") {
