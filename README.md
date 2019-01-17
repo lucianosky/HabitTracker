@@ -14,6 +14,7 @@ As this moment the focus is to use several technologies from the Swift stack.
 - RxSwift
 - HabitTrackerVapor, a parallel to create an API
 - Alamofire access to HabitTrackerVapor
+- Unit Testing and BDD with Quick and Nimble
 
 ## Data persistance TO DO:
 - Implement Alamofire 5 (still in Beta). I used Alamofire 4.8 with an extension that permits Codable conformance.
@@ -24,7 +25,7 @@ As this moment the focus is to use several technologies from the Swift stack.
 ## Technical stack TO DO:
 - Save or export to a Google Calendar
 - Firebase usage: logging, crash reporting, warnings
-- Unit testing
+- Increase unit testing coverage
 - UI testing
 
 # App improvement TO DO:
