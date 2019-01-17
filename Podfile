@@ -1,11 +1,20 @@
 platform :ios, '11.4'
 
-target 'HabitTracker' do
-  use_frameworks!
+def common_pods
+    use_frameworks!
+    pod 'RxAtomic', '~> 4.4'
+    pod 'RxSwift', '~> 4.4'
+    pod 'RxCocoa', '~> 4.4'
+    pod 'RxGesture', '~> 2.1'
+    pod 'Alamofire', '~> 4.8'
+    pod 'Quick', '~> 1.3'
+    pod 'Nimble', '~> 7.3'
+end
 
-  pod 'RxAtomic', '~> 4.4'
-  pod 'RxSwift', '~> 4.4'
-  pod 'RxCocoa', '~> 4.4'
-  pod 'RxGesture', '~> 2.1'
-  pod 'Alamofire', '~> 4.8'
+target 'HabitTracker' do
+    common_pods
+end
+
+target 'HabitTrackerTests' do
+    common_pods
 end

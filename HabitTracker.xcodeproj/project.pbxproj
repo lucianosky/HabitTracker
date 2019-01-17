@@ -31,7 +31,9 @@
 		6E9727B321E008A800BDC68A /* HabitTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9727B221E008A800BDC68A /* HabitTrackerUITests.swift */; };
 		6E9727C121E122BA00BDC68A /* CalMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9727C021E122BA00BDC68A /* CalMonth.swift */; };
 		6EF3060721F0CAAE00833084 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF3060621F0CAAE00833084 /* Date+Extension.swift */; };
+		6EF3060921F1063B00833084 /* CalMonthSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF3060821F1063B00833084 /* CalMonthSpec.swift */; };
 		97815F06B9DF3A3A6FFC5957 /* Pods_HabitTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE5608A9B995D8D057E3201 /* Pods_HabitTracker.framework */; };
+		BFB2E46E9BE99997075E8E13 /* Pods_HabitTrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3514DC47FB903DA483C6AE32 /* Pods_HabitTrackerTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		326EE27E332BE4B7697EED8B /* Pods-HabitTrackerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HabitTrackerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-HabitTrackerTests/Pods-HabitTrackerTests.release.xcconfig"; sourceTree = "<group>"; };
+		3514DC47FB903DA483C6AE32 /* Pods_HabitTrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HabitTrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D621E92400028BA80A183DE /* Pods-HabitTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HabitTracker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HabitTracker/Pods-HabitTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		6E28452A21E3920E00C4CC1F /* WeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTableViewCell.swift; sourceTree = "<group>"; };
 		6E28452C21E54B8400C4CC1F /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 		6E9727B421E008A800BDC68A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E9727C021E122BA00BDC68A /* CalMonth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalMonth.swift; sourceTree = "<group>"; };
 		6EF3060621F0CAAE00833084 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		6EF3060821F1063B00833084 /* CalMonthSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalMonthSpec.swift; sourceTree = "<group>"; };
+		6F22AE82125BF3CE72DDB470 /* Pods-HabitTrackerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HabitTrackerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HabitTrackerTests/Pods-HabitTrackerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9C436913FE27B8167BB352BB /* Pods-HabitTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HabitTracker.release.xcconfig"; path = "Pods/Target Support Files/Pods-HabitTracker/Pods-HabitTracker.release.xcconfig"; sourceTree = "<group>"; };
 		FEE5608A9B995D8D057E3201 /* Pods_HabitTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HabitTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -100,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFB2E46E9BE99997075E8E13 /* Pods_HabitTrackerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +125,8 @@
 			children = (
 				6D621E92400028BA80A183DE /* Pods-HabitTracker.debug.xcconfig */,
 				9C436913FE27B8167BB352BB /* Pods-HabitTracker.release.xcconfig */,
+				6F22AE82125BF3CE72DDB470 /* Pods-HabitTrackerTests.debug.xcconfig */,
+				326EE27E332BE4B7697EED8B /* Pods-HabitTrackerTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -209,6 +218,7 @@
 		6E9727A621E008A800BDC68A /* HabitTrackerTests */ = {
 			isa = PBXGroup;
 			children = (
+				6EF3060821F1063B00833084 /* CalMonthSpec.swift */,
 				6E9727A721E008A800BDC68A /* HabitTrackerTests.swift */,
 				6E9727A921E008A800BDC68A /* Info.plist */,
 			);
@@ -228,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				FEE5608A9B995D8D057E3201 /* Pods_HabitTracker.framework */,
+				3514DC47FB903DA483C6AE32 /* Pods_HabitTrackerTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -258,9 +269,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6E9727BA21E008A800BDC68A /* Build configuration list for PBXNativeTarget "HabitTrackerTests" */;
 			buildPhases = (
+				268A40085D540B1BB29E0B04 /* [CP] Check Pods Manifest.lock */,
 				6E97279F21E008A800BDC68A /* Sources */,
 				6E9727A021E008A800BDC68A /* Frameworks */,
 				6E9727A121E008A800BDC68A /* Resources */,
+				81F8AC2E06754953C6CC6B93 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -370,6 +383,8 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-HabitTracker/Pods-HabitTracker-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
@@ -380,6 +395,8 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
@@ -388,6 +405,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HabitTracker/Pods-HabitTracker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		268A40085D540B1BB29E0B04 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HabitTrackerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		81F8AC2E06754953C6CC6B93 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-HabitTrackerTests/Pods-HabitTrackerTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
+				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HabitTrackerTests/Pods-HabitTrackerTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B8FDE5B2986F0B411391BB06 /* [CP] Check Pods Manifest.lock */ = {
@@ -446,6 +519,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EF3060921F1063B00833084 /* CalMonthSpec.swift in Sources */,
 				6E9727A821E008A800BDC68A /* HabitTrackerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -643,6 +717,7 @@
 		};
 		6E9727BB21E008A800BDC68A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F22AE82125BF3CE72DDB470 /* Pods-HabitTrackerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -664,6 +739,7 @@
 		};
 		6E9727BC21E008A800BDC68A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 326EE27E332BE4B7697EED8B /* Pods-HabitTrackerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
