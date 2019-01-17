@@ -16,6 +16,10 @@ As this moment the focus is to use several technologies from the Swift stack.
 - Alamofire access to HabitTrackerVapor
 - Unit Testing and BDD with Quick and Nimble
 
+## Design
+- The UI and UX were also created by the app author
+- Color palette: [Dracula](https://github.com/dracula/dracula-theme/) Theme
+
 ## Data persistance TO DO:
 - Implement Alamofire 5 (still in Beta). I used Alamofire 4.8 with an extension that permits Codable conformance.
 - Support offline sync between Core Data and HabitTrackVapor.
