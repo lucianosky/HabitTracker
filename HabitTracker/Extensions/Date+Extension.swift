@@ -18,4 +18,16 @@ extension Date {
         }
     }
     
+    static func fromComponents(year: Int, month: Int, day: Int = 1) -> Date {
+        var components = DateComponents()
+        components.year = year
+        components.month = month
+        components.day = day
+        components.hour = 0
+        components.minute = 0
+        components.second = 0
+        // TODO optional
+        return Calendar.current.date(from: components)!
+    }
+    
 }

@@ -31,19 +31,11 @@ struct CalMonth {
             return index
         }
 
-        var components = DateComponents()
-        components.year = year
-        components.month = month
-        components.day = 1
-        components.hour = 0
-        components.minute = 0
-        components.second = 0
-        //components.timeZone = TimeZone.init(identifier: "GMT")
-            
+        
         self.startOfWeek = startOfWeek
         
-        firstMonthDate = Calendar.current.date(from: components)!
-        lastMonthDate = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstMonthDate)!
+        firstMonthDate = Date.fromComponents(year: year, month: month)
+        lastMonthDate =  Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstMonthDate)!
 
         let firstWeekday = Calendar.current.component(.weekday, from: firstMonthDate)
         let lastWeekday = Calendar.current.component(.weekday, from: lastMonthDate)
