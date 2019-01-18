@@ -25,7 +25,7 @@ extension UIColor {
     // DARK THEME
     // TODO: Dracula Theme - Give credit
     static let background = UIColor(netHex: 0x282a36)
-    static let backgroundXXX = UIColor(netHex: 0x44475a)
+    static let headerBackground = UIColor(netHex: 0x44475a)
 
     static let inactiveText = UIColor(netHex: 0x8be9fd)
     static let notMonthText = UIColor(netHex: 0x6272a4)

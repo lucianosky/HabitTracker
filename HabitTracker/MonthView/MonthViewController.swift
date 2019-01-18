@@ -45,7 +45,6 @@ class MonthViewController: UIViewController {
     
     private func createSubviews() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        //tableView.rowHeight = 50
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
         tableView.register(WeekTableViewCell.self, forCellReuseIdentifier: Constants.tableCellId)

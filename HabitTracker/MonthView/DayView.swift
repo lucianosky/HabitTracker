@@ -30,6 +30,12 @@ class DayView: UIView {
         }
     }
     
+    var shrink: Bool = false {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
+    
     var date: Date?
     
     var isHeader = false
@@ -58,24 +64,19 @@ class DayView: UIView {
     }
     
     private func drawCircle() {
-        // colors for inactive and none
-        UIColor.background.setStroke()
-        UIColor.background.setFill()
+        // color for inactive and none
+        var newColor = UIColor.background
         if active {
             switch habitState {
             case .none: break
-            case .done:
-                UIColor.doneStroke.setStroke()
-                UIColor.doneFill.setFill()
-            case .notDone:
-                UIColor.notDoneStroke.setStroke()
-                UIColor.notDoneFill.setFill()
+            case .done: newColor = .doneStroke
+            case .notDone: newColor = .notDoneStroke
             }
-        // XXX
         } else if isHeader {
-            UIColor.backgroundXXX.setStroke()
-            UIColor.backgroundXXX.setFill()
+            newColor = .headerBackground
         }
+        newColor.setFill()
+        newColor.setStroke()
 
         let lineWidth: CGFloat = 4.0
         let halfLineWidth = lineWidth / 2.0
@@ -87,14 +88,33 @@ class DayView: UIView {
         path.stroke()
         path.fill()
         
-        let fadeAnimation = CABasicAnimation(keyPath: "opacity")
-        fadeAnimation.fromValue = 0.0
-        fadeAnimation.toValue = 1.0
-        fadeAnimation.duration = 0.8
-        fadeAnimation.repeatCount = 1
+        var animations = [CABasicAnimation]()
+
+        let animation = CABasicAnimation(keyPath: "transform.scale") //
+        animation.fromValue = shrink ? 1.0 : 0.75
+        animation.toValue = shrink ? 0.75 : 1.0
+        animation.duration = 0.5
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = .forwards
+        animations.append(animation)
+
+        // simultaneous, otherwise use beginTime
+        let animation2 = CABasicAnimation(keyPath: "opacity") //
+        animation2.fromValue = shrink ? 1.0 : 0.2
+        animation2.toValue = shrink ? 0.2 : 1.0
+        animation2.duration = 0.5
+        animation2.isRemovedOnCompletion = false
+        animation2.fillMode = .forwards
+        animations.append(animation2)
         
-        layer.opacity = 1.0
-        layer.add(fadeAnimation, forKey: "FadeAnimation")
+        let group = CAAnimationGroup()
+        group.duration = 0.5
+        group.repeatCount = 1
+        group.animations = animations
+        group.fillMode = .forwards
+        group.isRemovedOnCompletion = false
+        
+        layer.add(group, forKey: nil)
     }
     
     private func drawText() {

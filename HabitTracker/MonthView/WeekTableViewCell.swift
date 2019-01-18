@@ -32,15 +32,20 @@ class WeekTableViewCell: UITableViewCell {
             dayView.tag = i+1
 
             dayView.rx
-                .tapGesture()
-                .when(.recognized)
-                .subscribe(onNext: { [weak self] _ in
+                .longPressGesture()
+                .when(.began, .ended)
+                .subscribe(onNext: { [weak self] gesture in
                     // TODO log if null
-                    if dayView.isHeader {
-                        self?.monthViewController?.changeStartOfWeek(tag: dayView.tag)
+                    if gesture.state == .began {
+                        dayView.shrink = true
                     } else {
-                        if let date = dayView.date {
-                            self?.monthViewController?.changeHabitState(date: date)
+                        dayView.shrink = false
+                        if dayView.isHeader {
+                            self?.monthViewController?.changeStartOfWeek(tag: dayView.tag)
+                        } else {
+                            if let date = dayView.date {
+                                self?.monthViewController?.changeHabitState(date: date)
+                            }
                         }
                     }
                 })
