@@ -10,11 +10,13 @@ As this moment the focus is to use several technologies from the Swift stack.
 - Dependency injection (for later usage with unit testing)
 - Basic animation
 - View code
-- Core data
 - RxSwift
+- Serialization with Codable protocol
+- Core data local persistance
 - [HabitTrackerVapor](https://github.com/lucianosky/HabitTrackerVapor), a [Vapor](https://vapor.codes/) backend project to create an API
-- Alamofire access to HabitTrackerVapor
+- Alamofire access to Vapor Cloud backend
 - Unit Testing and BDD with Quick and Nimble
+- Firebase integration. WIP: Crashlytics. TODO: logging, warnings, remote config
 
 ## Design
 - The UI and UX were also created by the app author
@@ -28,7 +30,6 @@ As this moment the focus is to use several technologies from the Swift stack.
 
 ## Technical stack TO DO:
 - Save or export to a Google Calendar
-- Firebase usage: logging, crash reporting, warnings
 - Increase unit testing coverage
 - UI testing
 

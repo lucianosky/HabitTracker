@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import Fabric
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
+        
+        FirebaseApp.configure()
+        Fabric.sharedSDK().debug = true
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let monthViewController = MonthViewController()

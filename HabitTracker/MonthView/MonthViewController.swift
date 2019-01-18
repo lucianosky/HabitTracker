@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxGesture
+import Crashlytics
 
 private struct Constants {
     static let tableCellId = "weekCell"
@@ -119,6 +120,7 @@ class MonthViewController: UIViewController {
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
                 self?.viewModel.browseToday()
+                Crashlytics.sharedInstance().crash()
             })
             .disposed(by: self.disposeBag)
 

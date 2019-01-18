@@ -9,6 +9,9 @@ def common_pods
     pod 'Alamofire', '~> 4.8'
     pod 'Quick', '~> 1.3'
     pod 'Nimble', '~> 7.3'
+    pod 'Firebase/Core'
+    pod 'Fabric', '~> 1.9.0'
+    pod 'Crashlytics', '~> 3.12.0'
 end
 
 target 'HabitTracker' do
