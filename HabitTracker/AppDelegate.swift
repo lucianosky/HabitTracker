@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
         
         FirebaseApp.configure()
-        Fabric.sharedSDK().debug = true
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let monthViewController = MonthViewController()
