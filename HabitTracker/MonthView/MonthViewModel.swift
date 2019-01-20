@@ -69,7 +69,11 @@ class MonthViewModel {
         if newStartOfWeek > 7 {
             newStartOfWeek -= 7
         }
-        calMonth = CalMonth(date: calMonth.firstMonthDate, startOfWeek: newStartOfWeek)
+        changeStartOfWeek(startOfWeek: newStartOfWeek)
+    }
+    
+    func changeStartOfWeek(startOfWeek: Int) {
+        calMonth = CalMonth(date: calMonth.firstMonthDate, startOfWeek: startOfWeek)
         emit()
     }
     

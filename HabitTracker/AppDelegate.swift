@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Firebase
-import Fabric
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,12 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
         
-        FirebaseApp.configure()
+        let monthViewController = MonthViewController()
+
+        FirebaseHelper.shared.config() {
+            monthViewController.viewModel.changeStartOfWeek(startOfWeek: FirebaseHelper.shared.appConfiguration.startOfWeek)
+        }
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let monthViewController = MonthViewController()
         self.window?.rootViewController = monthViewController
         self.window?.makeKeyAndVisible()
+
         return true
     }
 

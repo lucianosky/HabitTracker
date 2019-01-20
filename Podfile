@@ -8,6 +8,7 @@ def common_pods
     pod 'RxGesture', '~> 2.1'
     pod 'Alamofire', '~> 4.8'
     pod 'Firebase/Core'
+    pod 'Firebase/RemoteConfig'
     pod 'Fabric', '~> 1.9.0'
     pod 'Crashlytics', '~> 3.12.0'
 end
