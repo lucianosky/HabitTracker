@@ -44,6 +44,7 @@ class WeekTableViewCell: UITableViewCell {
                             self?.monthViewController?.changeStartOfWeek(tag: dayView.tag)
                         } else {
                             if let date = dayView.date {
+                                FirebaseHelper.shared.logEvent(event: "MONTH_VIEW_DAY", parameters: ["DATE": date.yyyymmdd])
                                 self?.monthViewController?.changeHabitState(date: date)
                             }
                         }

@@ -35,12 +35,14 @@ class MonthViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        FirebaseHelper.shared.nonCriticalError("this is a non critical error")
         super.viewDidLoad()
         createSubviews()
         createConstraints()
         createDataBinds()
         createGestureBinds()
         viewModel.serviceCall()
+        FirebaseHelper.shared.logEvent(event: "MONTH_VIEW")
     }
     
     private func createSubviews() {

@@ -16,7 +16,7 @@ As this moment the focus is to use several technologies from the Swift stack.
 - [HabitTrackerVapor](https://github.com/lucianosky/HabitTrackerVapor), a [Vapor](https://vapor.codes/) backend project to create an API
 - Alamofire access to Vapor Cloud backend
 - Unit Testing and BDD with Quick and Nimble
-- Firebase integration. WIP: Crashlytics. TODO: logging, warnings, remote config
+- Firebase integration: Crashlytics (crashes & non critical errors), remote config, event logging
 
 ## Design
 - The UI and UX were also created by the app author
@@ -29,6 +29,7 @@ As this moment the focus is to use several technologies from the Swift stack.
 - Refactor two different classed that represent a HabitLog. One for Core Data and another for Alamofire.
 
 ## Technical stack TO DO:
+- Firebase: login 
 - Save or export to a Google Calendar
 - Increase unit testing coverage
 - UI testing
