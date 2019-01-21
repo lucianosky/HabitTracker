@@ -24,6 +24,8 @@ class MonthViewModel {
         createBinds()
     }
     
+    // TODO: review below after final backend implementation
+    
     func createBinds() {
 //        NetworkService.shared.currentHabitLog.subscribe(onNext: { (habitLogDB) in
 //            print(habitLogDB)

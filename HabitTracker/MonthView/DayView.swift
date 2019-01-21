@@ -90,7 +90,7 @@ class DayView: UIView {
         
         var animations = [CABasicAnimation]()
 
-        let animation = CABasicAnimation(keyPath: "transform.scale") //
+        let animation = CABasicAnimation(keyPath: "transform.scale")
         animation.fromValue = shrink ? 1.0 : 0.75
         animation.toValue = shrink ? 0.75 : 1.0
         animation.duration = 0.5
@@ -99,7 +99,7 @@ class DayView: UIView {
         animations.append(animation)
 
         // simultaneous, otherwise use beginTime
-        let animation2 = CABasicAnimation(keyPath: "opacity") //
+        let animation2 = CABasicAnimation(keyPath: "opacity")
         animation2.fromValue = shrink ? 1.0 : 0.2
         animation2.toValue = shrink ? 0.2 : 1.0
         animation2.duration = 0.5

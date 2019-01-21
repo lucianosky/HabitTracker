@@ -8,6 +8,14 @@
 
 import Foundation
 
+private struct Constants {
+    struct DateComponensError {
+        static let year = 2019
+        static let month = 1
+    }
+    static let theClass = "CalMonth"
+}
+
 struct CalMonth {
     
     let firstMonthDate: Date
@@ -19,8 +27,12 @@ struct CalMonth {
 
     init (date: Date, startOfWeek: Int = 1) {
         var components = Calendar.current.dateComponents([.year, .month], from: date)
-        // TODO optionals
-        self.init(year: components.year!, month: components.month!, startOfWeek: startOfWeek)
+        if let year = components.year, let month = components.month {
+            self.init(year: year, month: month, startOfWeek: startOfWeek)
+        } else {
+            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "CalMonth init")
+            self.init(year: Constants.DateComponensError.year, month: Constants.DateComponensError.month, startOfWeek: startOfWeek)
+        }
     }
     
     init(year: Int, month: Int, startOfWeek: Int = 1) {
@@ -30,12 +42,17 @@ struct CalMonth {
             index = index > 0 ? index : index + 7
             return index
         }
-
         
         self.startOfWeek = startOfWeek
         
         firstMonthDate = Date.fromComponents(year: year, month: month)
-        lastMonthDate =  Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstMonthDate)!
+        if let last = Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: firstMonthDate) {
+            lastMonthDate = last
+        } else {
+            // TODO: unexpected date handling error, warn user
+            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "CalMonth init")
+            lastMonthDate = firstMonthDate
+        }
 
         let firstWeekday = Calendar.current.component(.weekday, from: firstMonthDate)
         let lastWeekday = Calendar.current.component(.weekday, from: lastMonthDate)
@@ -43,8 +60,16 @@ struct CalMonth {
         let deltaBefore = -dayIndex(firstWeekday) + 1
         let deltaAfter = 7 - dayIndex(lastWeekday)
         
-        firstCalDate = Calendar.current.date(byAdding: DateComponents(day: deltaBefore), to: firstMonthDate)!
-        lastCalDate = Calendar.current.date(byAdding: DateComponents(day: deltaAfter), to: lastMonthDate)!
+        if let first = Calendar.current.date(byAdding: DateComponents(day: deltaBefore), to: firstMonthDate),
+            let last = Calendar.current.date(byAdding: DateComponents(day: deltaAfter), to: lastMonthDate) {
+            firstCalDate = first
+            lastCalDate = last
+        } else {
+            // TODO: unexpected date handling error, warn user
+            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "CalMonth init")
+            firstCalDate = firstMonthDate
+            lastCalDate = firstMonthDate
+        }
         
         let days = Calendar.current.dateComponents([.day], from: firstCalDate, to: lastCalDate).day! + 1
         weeks = days / 7
@@ -95,6 +120,13 @@ struct CalMonth {
     
     func browseToday() -> CalMonth {
         return CalMonth(date: Date(), startOfWeek: startOfWeek)
+    }
+    
+    // warning are triggered by computing dates, should not happen
+    // TODO: cover by unit test
+    // TODO: warn user
+    private func generateWarning(dummyDate date: Date) -> Date {
+        return date
     }
     
 }

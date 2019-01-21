@@ -12,7 +12,7 @@ import RxCocoa
 import RxGesture
 
 private struct Constants {
-    static let theClass = "MONTH_CELL"
+    static let theClass = "WEEK_CELL"
 }
 
 class WeekTableViewCell: UITableViewCell {
