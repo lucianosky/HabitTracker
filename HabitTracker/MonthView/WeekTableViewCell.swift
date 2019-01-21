@@ -11,6 +11,10 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
+private struct Constants {
+    static let theClass = "MONTH_CELL"
+}
+
 class WeekTableViewCell: UITableViewCell {
     
     let stack = UIStackView(.horizontal)
@@ -35,18 +39,21 @@ class WeekTableViewCell: UITableViewCell {
                 .longPressGesture()
                 .when(.began, .ended)
                 .subscribe(onNext: { [weak self] gesture in
-                    // TODO log if null
+                    guard let self = self, let monthVC = self.monthViewController else {
+                        FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "subscribe dayView")
+                        return
+                    }
                     if gesture.state == .began {
                         dayView.shrink = true
                     } else {
                         dayView.shrink = false
                         if dayView.isHeader {
-                            self?.monthViewController?.changeStartOfWeek(tag: dayView.tag)
+                            monthVC.changeStartOfWeek(tag: dayView.tag)
                         } else {
                             if let date = dayView.date {
                                 FirebaseHelper.shared.logEvent(event: "MONTH_VIEW_DAY", parameters: ["DATE": date.yyyymmdd])
-                                self?.monthViewController?.changeHabitState(date: date)
-                            }
+                                monthVC.changeHabitState(date: date)
+                            } // not fromMonth days won't have dates
                         }
                     }
                 })
