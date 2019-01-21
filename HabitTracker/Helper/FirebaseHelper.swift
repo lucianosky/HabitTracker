@@ -90,6 +90,11 @@ class FirebaseHelper {
         Analytics.logEvent(Constants.warning, parameters: [Constants.theClass : theClass, Constants.message: message])
     }
     
+    func warning(theClass: String, unexpectedNullValue message: String) {
+        print("warning unexpectedNullValue: \(message)")
+        Analytics.logEvent(Constants.warning, parameters: [Constants.theClass : theClass, Constants.message: "Unexpected null value at: \(message)"])
+    }
+    
     func logEvent(event: String, parameters: [String : Any] = [:]) {
         print("logEvent: \(event)")
         Analytics.logEvent(event, parameters: parameters)

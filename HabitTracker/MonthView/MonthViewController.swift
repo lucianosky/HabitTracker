@@ -43,7 +43,6 @@ class MonthViewController: UIViewController {
         createGestureBinds()
         viewModel.serviceCall()
         FirebaseHelper.shared.logEvent(view: Constants.viewName)
-        FirebaseHelper.shared.warning(theClass: Constants.viewName, message: "this is a non critical error")
     }
     
     private func createSubviews() {
@@ -86,30 +85,44 @@ class MonthViewController: UIViewController {
 
         viewModel.dataSource
             .bind(to: tableView.rx.items){ [weak self] (tableView, row, calWeek) in
-                if let self = self, let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellId, for: IndexPath(row: row, section: 0)) as? WeekTableViewCell {
-                    return cell.configure(from: calWeek, monthViewController: self)
+                guard let self = self,
+                      let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellId,
+                                                               for: IndexPath(row: row, section: 0)) as? WeekTableViewCell
+                else {
+                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "bind tableView")
+                    return UITableViewCell()
                 }
-                return UITableViewCell()
+                return cell.configure(from: calWeek, monthViewController: self)
             }
             .disposed(by: disposeBag)
         
         viewModel.currentDate
             .subscribe(onNext: { [weak self] (date) in
+                guard let self = self else {
+                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe currentDate")
+                    return
+                }
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "LLLL"
-                self?.monthLabel.text = dateFormatter.string(from: date)
+                self.monthLabel.text = dateFormatter.string(from: date)
                 dateFormatter.dateFormat = "YYYY"
-                self?.yearLabel.text = dateFormatter.string(from: date)
+                self.yearLabel.text = dateFormatter.string(from: date)
             })
             .disposed(by: disposeBag)
         
         viewModel.changedState
             .subscribe(onNext: { [weak self] (date, habitState) in
-                for cell in self?.tableView.visibleCells ?? [] {
+                guard let self = self else {
+                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe changedState")
+                    return
+                }
+                for cell in self.tableView.visibleCells {
                     if let weekTableViewCell = cell as? WeekTableViewCell {
                         if weekTableViewCell.changeState(date: date, habitState: habitState) {
                             break
                         }
+                    } else {
+                        FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "weekTableViewCell")
                     }
                 }
             })
@@ -121,7 +134,11 @@ class MonthViewController: UIViewController {
             .tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.browseToday()
+                guard let self = self else {
+                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe tap monthLabel")
+                    return
+                }
+                self.viewModel.browseToday()
             })
             .disposed(by: self.disposeBag)
 
@@ -129,7 +146,11 @@ class MonthViewController: UIViewController {
             .swipeGesture([.up, .down])
             .when(.recognized)
             .subscribe(onNext: { [weak self] gesture in
-                self?.viewModel.browse(bySwipping: .year, toNext: gesture.direction == .up)
+                guard let self = self else {
+                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe swipe yearLabel")
+                    return
+                }
+                self.viewModel.browse(bySwipping: .year, toNext: gesture.direction == .up)
             })
             .disposed(by: self.disposeBag)
         
@@ -137,7 +158,11 @@ class MonthViewController: UIViewController {
             .swipeGesture([.left, .right])
             .when(.recognized)
             .subscribe(onNext: { [weak self] gesture in
-                self?.viewModel.browse(bySwipping: .month, toNext: gesture.direction == .left)
+                guard let self = self else {
+                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe swipe view")
+                    return
+                }
+                self.viewModel.browse(bySwipping: .month, toNext: gesture.direction == .left)
             })
             .disposed(by: disposeBag)
     }
