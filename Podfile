@@ -7,18 +7,24 @@ def common_pods
     pod 'RxCocoa', '~> 4.4'
     pod 'RxGesture', '~> 2.1'
     pod 'Alamofire', '~> 4.8'
-    pod 'Firebase/Core'
-    pod 'Firebase/RemoteConfig'
+    pod 'Firebase/Core', '~> 5.15'
+    pod 'Firebase/RemoteConfig', '~> 5.15'
     pod 'Fabric', '~> 1.9.0'
     pod 'Crashlytics', '~> 3.12.0'
 end
 
 target 'HabitTracker' do
     common_pods
+
+    target 'HabitTrackerTests' do
+        inherit! :search_paths
+        pod 'Quick', '~> 1.3'
+        pod 'Nimble', '~> 7.3'
+    end
 end
 
-target 'HabitTrackerTests' do
-    pod 'Quick', '~> 1.3'
-    pod 'Nimble', '~> 7.3'
-    common_pods
-end
+#target 'HabitTrackerTests' do
+#    pod 'Quick', '~> 1.3'
+#    pod 'Nimble', '~> 7.3'
+#    common_pods
+#end

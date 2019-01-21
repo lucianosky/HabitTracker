@@ -37,6 +37,7 @@ class FirebaseHelper {
     
     func config(complete: @escaping () -> Void ) {
         FirebaseApp.configure()
+        Fabric.with([Crashlytics.self])
         loadRemoteConfigurations(){
             complete()
         }

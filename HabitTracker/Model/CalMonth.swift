@@ -30,6 +30,7 @@ struct CalMonth {
         if let year = components.year, let month = components.month {
             self.init(year: year, month: month, startOfWeek: startOfWeek)
         } else {
+            // TODO: unexpected date handling error, warn user
             FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "CalMonth init")
             self.init(year: Constants.DateComponensError.year, month: Constants.DateComponensError.month, startOfWeek: startOfWeek)
         }
@@ -86,14 +87,23 @@ struct CalMonth {
     
     private func getWeekDays(_ week: Int) -> [CalDay] {
         // TODO: optionals
-        var date = Calendar.current.date(byAdding: DateComponents(day: week * 7), to: firstCalDate)!
         var calDays:[CalDay] = []
-        for _ in 0...6 {
-            let day = Calendar.current.dateComponents([.day], from: date).day ?? 0
-            let fromMonth = date >= firstMonthDate && date <= lastMonthDate
-            let calDay = CalDay(text: String(day), fromMonth: fromMonth, date: fromMonth ? date : nil)
-            calDays.append(calDay)
-            date = Calendar.current.date(byAdding: DateComponents(day: 1), to: date)!
+        var error = false
+        if var date = Calendar.current.date(byAdding: DateComponents(day: week * 7), to: firstCalDate) {
+            for _ in 0...6 {
+                let day = Calendar.current.dateComponents([.day], from: date).day ?? 0
+                if day == 0 { error = true }
+                let fromMonth = date >= firstMonthDate && date <= lastMonthDate
+                let calDay = CalDay(text: String(day), fromMonth: fromMonth, date: fromMonth ? date : nil)
+                calDays.append(calDay)
+                if let nextDate = Calendar.current.date(byAdding: DateComponents(day: 1), to: date) {
+                    date = nextDate
+                } else { error = true }
+            }
+        } else { error = true }
+        if error {
+            // TODO: unexpected date handling error, warn user
+            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "getWeekDays")
         }
         return calDays
     }
@@ -114,19 +124,17 @@ struct CalMonth {
     
     func browse(bySwipping component: Calendar.Component, toNext: Bool) -> CalMonth {
         // TODO optional
-        let date = Calendar.current.date(byAdding: component, value: toNext ? 1 : -1, to: firstMonthDate)!
-        return CalMonth(date: date, startOfWeek: startOfWeek)
+        if let date = Calendar.current.date(byAdding: component, value: toNext ? 1 : -1, to: firstMonthDate) {
+            return CalMonth(date: date, startOfWeek: startOfWeek)
+        } else {
+            // TODO: unexpected date handling error, warn user
+            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "browse")
+            return self
+        }
     }
     
     func browseToday() -> CalMonth {
         return CalMonth(date: Date(), startOfWeek: startOfWeek)
-    }
-    
-    // warning are triggered by computing dates, should not happen
-    // TODO: cover by unit test
-    // TODO: warn user
-    private func generateWarning(dummyDate date: Date) -> Date {
-        return date
     }
     
 }
