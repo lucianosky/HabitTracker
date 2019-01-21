@@ -14,6 +14,7 @@ import RxGesture
 private struct Constants {
     static let tableCellId = "weekCell"
     static let rowHeight: CGFloat = 55
+    static let viewName = "MONTH_VIEW"
 }
 
 class MonthViewController: UIViewController {
@@ -35,14 +36,14 @@ class MonthViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        FirebaseHelper.shared.nonCriticalError("this is a non critical error")
         super.viewDidLoad()
         createSubviews()
         createConstraints()
         createDataBinds()
         createGestureBinds()
         viewModel.serviceCall()
-        FirebaseHelper.shared.logEvent(event: "MONTH_VIEW")
+        FirebaseHelper.shared.logEvent(view: Constants.viewName)
+        FirebaseHelper.shared.warning(theClass: Constants.viewName, message: "this is a non critical error")
     }
     
     private func createSubviews() {

@@ -12,6 +12,11 @@ import Fabric
 
 private struct Constants {
     static let defaultStartOfWeek = 1
+    static let viewParameter = "VIEW"
+    static let viewDidLoad = "VIEW_DID_LOAD"
+    static let warning = "WARNING"
+    static let theClass = "CLASS"
+    static let message = "MESSAGE"
 }
 
 struct AppConfiguration {
@@ -43,12 +48,12 @@ class FirebaseHelper {
         
         func readPropertyNumber(_ key: String, _ defaultValue: Int) -> Int {
             guard let value = remoteConfig.configValue(forKey: key).numberValue else {
-                 nonCriticalError("Remote config with null value: \(key)")
+                warning(theClass: String(describing: self), message: "Remote config with null value: \(key)")
                 return defaultValue
             }
             let valueInt = Int(truncating: value)
             if valueInt == 0 {
-                 nonCriticalError("Remote config with zero value: \(key)")
+                warning(theClass: String(describing: self), message: "Remote config with zero value: \(key)")
                 return defaultValue
             }
             return valueInt
@@ -56,34 +61,33 @@ class FirebaseHelper {
         
         func readPropertyString(_ key: String, _ defaultValue: String) -> String {
             guard let value = remoteConfig.configValue(forKey: key).stringValue else {
-                 nonCriticalError("Remote config with null value: \(key)")
+                warning(theClass: String(describing: self), message: "Remote config with null value: \(key)")
                 return defaultValue
             }
             if value == "" {
-                 nonCriticalError("Remote config with empty value: \(key)")
+                warning(theClass: String(describing: self), message: "Remote config with empty value: \(key)")
                 return defaultValue
             }
             return value
         }
         
         // for debug purposes
-        remoteConfig.fetch(withExpirationDuration: 0, completionHandler: { [weak self] remoteConfigFetchStatus, error in
+        // remoteConfig.fetch(withExpirationDuration: 0, completionHandler: { [weak self] remoteConfigFetchStatus, error in
         
-        //remoteConfig.fetch(completionHandler: { [weak self] remoteConfigFetchStatus, error in
+        remoteConfig.fetch(completionHandler: { [weak self] remoteConfigFetchStatus, error in
             remoteConfig.activateFetched()
             self?.appConfiguration.startOfWeek = readPropertyNumber("START_OF_WEEK", Constants.defaultStartOfWeek)
             complete()
         })
     }
 
-//    func crash() {
-//        Crashlytics.sharedInstance().crash()
-//    }
+    // func crash() {
+    //     Crashlytics.sharedInstance().crash()
+    // }
     
-    func nonCriticalError(_ msg: String, _ code: Int = 0) {
-        print("nonCriticalError:\(msg) code=\(code)")
-        let error = NSError(domain:msg, code: code, userInfo: nil)
-        Crashlytics.sharedInstance().recordError(error)
+    func warning(theClass: String, message: String) {
+        print("warning: \(message)")
+        Analytics.logEvent(Constants.warning, parameters: [Constants.theClass : theClass, Constants.message: message])
     }
     
     func logEvent(event: String, parameters: [String : Any] = [:]) {
@@ -91,4 +95,9 @@ class FirebaseHelper {
         Analytics.logEvent(event, parameters: parameters)
     }
 
+    func logEvent(view: String) {
+        print("logEvent viewDidLoad: \(view)")
+        Analytics.logEvent(Constants.viewDidLoad, parameters: [Constants.viewParameter : view])
+    }
+    
 }
