@@ -14,6 +14,7 @@ private struct Constants {
     static let defaultStartOfWeek = 1
     static let viewParameter = "VIEW"
     static let viewDidLoad = "VIEW_DID_LOAD"
+    static let error = "ERROR"
     static let warning = "WARNING"
     static let theClass = "CLASS"
     static let message = "MESSAGE"
@@ -94,6 +95,11 @@ class FirebaseHelper {
     func warning(theClass: String, unexpectedNullValue message: String) {
         print("warning unexpectedNullValue: \(message)")
         Analytics.logEvent(Constants.warning, parameters: [Constants.theClass : theClass, Constants.message: "Unexpected null value at: \(message)"])
+    }
+    
+    func error(theClass: String, onServiceReturn message: String) {
+        print("error onServiceReturn: \(message)")
+        Analytics.logEvent(Constants.error, parameters: [Constants.theClass : theClass, Constants.message: "OnServiceReturn: \(message)"])
     }
     
     func logEvent(event: String, parameters: [String : Any] = [:]) {

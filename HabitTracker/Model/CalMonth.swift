@@ -123,7 +123,6 @@ struct CalMonth {
     }
     
     func browse(bySwipping component: Calendar.Component, toNext: Bool) -> CalMonth {
-        // TODO optional
         if let date = Calendar.current.date(byAdding: component, value: toNext ? 1 : -1, to: firstMonthDate) {
             return CalMonth(date: date, startOfWeek: startOfWeek)
         } else {
