@@ -13,7 +13,6 @@ private struct Constants {
         static let year = 2019
         static let month = 1
     }
-    static let theClass = "CalMonth"
 }
 
 struct CalMonth {
@@ -31,7 +30,7 @@ struct CalMonth {
             self.init(year: year, month: month, startOfWeek: startOfWeek)
         } else {
             // TODO: unexpected date handling error, warn user
-            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "CalMonth init")
+            FirebaseHelper.shared.warning(theClass: CalMonth.typeName, unexpectedNullValue: "CalMonth init")
             self.init(year: Constants.DateComponensError.year, month: Constants.DateComponensError.month, startOfWeek: startOfWeek)
         }
     }
@@ -51,7 +50,7 @@ struct CalMonth {
             lastMonthDate = last
         } else {
             // TODO: unexpected date handling error, warn user
-            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "CalMonth init")
+            FirebaseHelper.shared.warning(theClass: CalMonth.typeName, unexpectedNullValue: "CalMonth init")
             lastMonthDate = firstMonthDate
         }
 
@@ -67,7 +66,7 @@ struct CalMonth {
             lastCalDate = last
         } else {
             // TODO: unexpected date handling error, warn user
-            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "CalMonth init")
+            FirebaseHelper.shared.warning(theClass: CalMonth.typeName, unexpectedNullValue: "CalMonth init")
             firstCalDate = firstMonthDate
             lastCalDate = firstMonthDate
         }
@@ -103,7 +102,7 @@ struct CalMonth {
         } else { error = true }
         if error {
             // TODO: unexpected date handling error, warn user
-            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "getWeekDays")
+            FirebaseHelper.shared.warning(theClass: CalMonth.typeName, unexpectedNullValue: "getWeekDays")
         }
         return calDays
     }
@@ -127,7 +126,7 @@ struct CalMonth {
             return CalMonth(date: date, startOfWeek: startOfWeek)
         } else {
             // TODO: unexpected date handling error, warn user
-            FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "browse")
+            FirebaseHelper.shared.warning(theClass: CalMonth.typeName, unexpectedNullValue: "browse")
             return self
         }
     }
@@ -137,6 +136,8 @@ struct CalMonth {
     }
     
 }
+
+extension CalMonth: NameDescribable {}
 
 struct CalWeek {
     let isHeader: Bool

@@ -14,7 +14,6 @@ import RxGesture
 private struct Constants {
     static let tableCellId = "weekCell"
     static let rowHeight: CGFloat = 55
-    static let viewName = "MONTH_VIEW"
 }
 
 class MonthViewController: UIViewController {
@@ -42,7 +41,7 @@ class MonthViewController: UIViewController {
         createDataBinds()
         createGestureBinds()
         viewModel.serviceCall()
-        FirebaseHelper.shared.logEvent(view: Constants.viewName)
+        FirebaseHelper.shared.logEvent(view: MonthViewController.typeName)
     }
     
     private func createSubviews() {
@@ -89,7 +88,7 @@ class MonthViewController: UIViewController {
                       let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableCellId,
                                                                for: IndexPath(row: row, section: 0)) as? WeekTableViewCell
                 else {
-                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "bind tableView")
+                    FirebaseHelper.shared.warning(theClass: MonthViewController.typeName, unexpectedNullValue: "bind tableView")
                     return UITableViewCell()
                 }
                 return cell.configure(from: calWeek, monthViewController: self)
@@ -99,7 +98,7 @@ class MonthViewController: UIViewController {
         viewModel.currentDate
             .subscribe(onNext: { [weak self] (date) in
                 guard let self = self else {
-                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe currentDate")
+                    FirebaseHelper.shared.warning(theClass: MonthViewController.typeName, unexpectedNullValue: "subscribe currentDate")
                     return
                 }
                 let dateFormatter = DateFormatter()
@@ -113,7 +112,7 @@ class MonthViewController: UIViewController {
         viewModel.changedState
             .subscribe(onNext: { [weak self] (date, habitState) in
                 guard let self = self else {
-                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe changedState")
+                    FirebaseHelper.shared.warning(theClass: MonthViewController.typeName, unexpectedNullValue: "subscribe changedState")
                     return
                 }
                 for cell in self.tableView.visibleCells {
@@ -122,7 +121,7 @@ class MonthViewController: UIViewController {
                             break
                         }
                     } else {
-                        FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "weekTableViewCell")
+                        FirebaseHelper.shared.warning(theClass: MonthViewController.typeName, unexpectedNullValue: "weekTableViewCell")
                     }
                 }
             })
@@ -135,7 +134,7 @@ class MonthViewController: UIViewController {
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else {
-                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe tap monthLabel")
+                    FirebaseHelper.shared.warning(theClass: MonthViewController.typeName, unexpectedNullValue: "subscribe tap monthLabel")
                     return
                 }
                 self.viewModel.browseToday()
@@ -147,7 +146,7 @@ class MonthViewController: UIViewController {
             .when(.recognized)
             .subscribe(onNext: { [weak self] gesture in
                 guard let self = self else {
-                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe swipe yearLabel")
+                    FirebaseHelper.shared.warning(theClass: MonthViewController.typeName, unexpectedNullValue: "subscribe swipe yearLabel")
                     return
                 }
                 self.viewModel.browse(bySwipping: .year, toNext: gesture.direction == .up)
@@ -159,7 +158,7 @@ class MonthViewController: UIViewController {
             .when(.recognized)
             .subscribe(onNext: { [weak self] gesture in
                 guard let self = self else {
-                    FirebaseHelper.shared.warning(theClass: Constants.viewName, unexpectedNullValue: "subscribe swipe view")
+                    FirebaseHelper.shared.warning(theClass: MonthViewController.typeName, unexpectedNullValue: "subscribe swipe view")
                     return
                 }
                 self.viewModel.browse(bySwipping: .month, toNext: gesture.direction == .left)
@@ -184,3 +183,4 @@ extension MonthViewController : UITableViewDelegate {
     
 }
 
+extension MonthViewController : NameDescribable {}

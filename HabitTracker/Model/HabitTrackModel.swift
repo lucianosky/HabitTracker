@@ -18,7 +18,6 @@ enum HabitState {
 private struct Constants {
     static let entityName = "HabitLog"
     static let datePredicate = "yyyymmdd = %@"
-    static let theClass = "HabitTrackModel"
 }
 
 class HabitTrackModel {
@@ -92,7 +91,7 @@ extension HabitTrackModel {
                 try context.save()
             } else {
                 print("error in udpate")
-                FirebaseHelper.shared.error(theClass: Constants.theClass, onCoreDataHelper: "udpate")
+                FirebaseHelper.shared.error(theClass: HabitTrackModel.typeName, onCoreDataHelper: "udpate")
                 return false
             }
         } catch let error as NSError {
@@ -101,7 +100,7 @@ extension HabitTrackModel {
             // TODO: FirebaseHelper.error -> save "ERROR"
             
             print("Could not update. \(error), \(error.userInfo)")
-            FirebaseHelper.shared.error(theClass: Constants.theClass, onCoreDataHelper: "udpate")
+            FirebaseHelper.shared.error(theClass: HabitTrackModel.typeName, onCoreDataHelper: "udpate")
             return false
         }
         return true
@@ -118,12 +117,12 @@ extension HabitTrackModel {
                 context.delete(habitLog)
                 try context.save()
             } else {
-                FirebaseHelper.shared.error(theClass: Constants.theClass, onCoreDataHelper: "delete")
+                FirebaseHelper.shared.error(theClass: HabitTrackModel.typeName, onCoreDataHelper: "delete")
                 print("error in delete")
                 return false
             }
         } catch let error as NSError {
-            FirebaseHelper.shared.error(theClass: Constants.theClass, onCoreDataHelper: "delete")
+            FirebaseHelper.shared.error(theClass: HabitTrackModel.typeName, onCoreDataHelper: "delete")
             print("Could not delete. \(error), \(error.userInfo)")
             return false
         }
@@ -142,21 +141,23 @@ extension HabitTrackModel {
                         habitsDict[yyyymmdd] = habitLog.done ? HabitState.done : HabitState.notDone
                     } else {
                         result = false
-                        FirebaseHelper.shared.error(theClass: Constants.theClass, onCoreDataHelper: "fetchAll")
+                        FirebaseHelper.shared.error(theClass: HabitTrackModel.typeName, onCoreDataHelper: "fetchAll")
                         print("error in fetchAll")
                     }
                 }
             } else {
                 result = false
-                FirebaseHelper.shared.error(theClass: Constants.theClass, onCoreDataHelper: "fetchAll")
+                FirebaseHelper.shared.error(theClass: HabitTrackModel.typeName, onCoreDataHelper: "fetchAll")
                 print("error in fetchAll")
             }
         } catch let error as NSError {
             result = false
-            FirebaseHelper.shared.error(theClass: Constants.theClass, onCoreDataHelper: "fetchAll")
+            FirebaseHelper.shared.error(theClass: HabitTrackModel.typeName, onCoreDataHelper: "fetchAll")
             print("Could not list. \(error), \(error.userInfo)")
         }
         return result
     }
     
 }
+
+extension HabitTrackModel: NameDescribable {}

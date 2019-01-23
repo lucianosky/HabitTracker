@@ -11,10 +11,6 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-private struct Constants {
-    static let theClass = "WEEK_CELL"
-}
-
 class WeekTableViewCell: UITableViewCell {
     
     let stack = UIStackView(.horizontal)
@@ -40,7 +36,7 @@ class WeekTableViewCell: UITableViewCell {
                 .when(.began, .ended)
                 .subscribe(onNext: { [weak self] gesture in
                     guard let self = self, let monthVC = self.monthViewController else {
-                        FirebaseHelper.shared.warning(theClass: Constants.theClass, unexpectedNullValue: "subscribe dayView")
+                        FirebaseHelper.shared.warning(theClass: WeekTableViewCell.typeName, unexpectedNullValue: "subscribe dayView")
                         return
                     }
                     if gesture.state == .began {
@@ -116,5 +112,4 @@ class WeekTableViewCell: UITableViewCell {
     
 }
 
-
-
+extension WeekTableViewCell : NameDescribable {}
