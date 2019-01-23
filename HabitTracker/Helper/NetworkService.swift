@@ -41,6 +41,7 @@ class NetworkService {
                 case .success(let habitLogDB):
                     self?.currentHabitLog.onNext(habitLogDB)
                 case .failure(let error):
+                    FirebaseHelper.shared.error(theClass: NetworkService.typeName, onServiceReturn: "getHabitLog")
                     print(error)
                 }
         }
@@ -55,12 +56,15 @@ class NetworkService {
                 case .success(let habitLogs):
                     self?.currentHabitLogs.onNext(habitLogs)
                 case .failure(let error):
+                    FirebaseHelper.shared.error(theClass: NetworkService.typeName, onServiceReturn: "getHabitLogs")
                     print(error)
                 }
         }
     }
     
 }
+
+extension NetworkService: NameDescribable {}
 
 enum BackendError: Error {
     case parsing(reason: String)

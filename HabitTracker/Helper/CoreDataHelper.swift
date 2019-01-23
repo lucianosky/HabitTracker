@@ -19,7 +19,7 @@ class CoreDataHelper {
         let container = NSPersistentContainer(name: "HabitTracker")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                // TODO - log
+                FirebaseHelper.shared.error(theClass: self.typeName, onCoreDataHelper: "persistentContainer")
                 print("Core data error \(error), \(error.userInfo)")
             }
         })
@@ -33,10 +33,12 @@ class CoreDataHelper {
                 try context.save()
             } catch {
                 let nserror = error as NSError
-                // TODO: log
+                FirebaseHelper.shared.error(theClass: self.typeName, onCoreDataHelper: "saveContext")
                 print("Core data error \(nserror), \(nserror.userInfo)")
             }
         }
     }
     
 }
+
+extension CoreDataHelper: NameDescribable {}

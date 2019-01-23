@@ -102,6 +102,11 @@ class FirebaseHelper {
         Analytics.logEvent(Constants.error, parameters: [Constants.theClass : theClass, Constants.message: "OnServiceReturn: \(message)"])
     }
     
+    func error(theClass: String, onCoreDataHelper message: String) {
+        print("error onServiceReturn: \(message)")
+        Analytics.logEvent(Constants.error, parameters: [Constants.theClass : theClass, Constants.message: "onCoreDataHelper: \(message)"])
+    }
+    
     func logEvent(event: String, parameters: [String : Any] = [:]) {
         print("logEvent: \(event)")
         Analytics.logEvent(event, parameters: parameters)
